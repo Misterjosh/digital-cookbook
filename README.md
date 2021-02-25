@@ -1,7 +1,7 @@
 # My Digital Cookbook
    
 # Description: 
-   A way to digitize your favorite recipes. Old family recipes or some of your favorites.
+   A way to digitize organize old family recipes, or some of your current favorites.
 
 # Table of Contents:
 
