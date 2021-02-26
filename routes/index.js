@@ -4,8 +4,9 @@ const apiRoutes = require('./api');
 
 router.use('/api', apiRoutes);
 
+// was client/build - threw errors - changed to public
 router.use((req, res) => 
-    res.sendFile(path.join(__dirname, "../client/build/index.html"))
+    res.sendFile(path.join(__dirname, "../client/public/index.html"))
 );
 
 module.exports = router;
