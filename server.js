@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const routes = require('./routes')
 const PORT = process.env.PORT || 3001;
 
 // MongoDB connection through Mongoose
@@ -13,9 +14,12 @@ mongoose.connect(
     }
   );
 
-// Telling express to work with JSON objects in requests
+// Makes express work with JSON objects in requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Makes express use the routes folder
+app.use(routes);
 
 // Set up the app to run using PORT
 app.listen(PORT, () =>
