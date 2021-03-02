@@ -19,7 +19,7 @@ export default function LogInForm({ email, password, onSubmit, handleInputChange
                     type="password"
                     placeholder="Password" />
                 <br />
-                <button type="submit" onClick={onSubmit}>Log in</button>
+                <button type="submit" className="submit-btn" onClick={onSubmit}>Log in</button>
             </form>
         </div>
     )

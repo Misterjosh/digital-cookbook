@@ -33,7 +33,7 @@ export default function SignUpForm({ fName, lName, email, password, onSubmit, ha
                         type="password" 
                         placeholder="Password" />
                         <br />
-                    <button type="submit" onClick={onSubmit}>Submit</button>
+                    <button type="submit" className="submit-btn" onClick={onSubmit}>Submit</button>
                 </form>
         </div>
     )
