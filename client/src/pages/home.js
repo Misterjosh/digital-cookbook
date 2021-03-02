@@ -25,8 +25,8 @@ class Home extends Component {
             <div style={{textAlign:"center"}}>
                 <Navbar />
                 <div className="home">
-                    <h1>Welcome to Digital Cookbook</h1>
-                    <h3>Please log in or <a href="/signup">sign up</a></h3>
+                    <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
+                    <h3><span className="red-span">Please log in or </span><a className="blue-link" href="/signup">sign up</a></h3>
                     <LogIn
                         email={this.state.email}
                         password={this.state.password}

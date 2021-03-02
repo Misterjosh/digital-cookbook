@@ -47,7 +47,8 @@ class Signup extends Component {
             <div style={{textAlign:"center"}}>
                 <Navbar />
                     <div>
-                        <h2>Please Create Your Profile Here or <a href="/">Login</a></h2>
+                        <h1><span className="red-span">Create Your Profile Here</span></h1>
+                        <h3><span className="red-span">or </span><a className="blue-link" href="/">Login</a></h3>
                             <SignupForm 
                                     fName={this.state.fName}
                                     lName={this.state.lName}
