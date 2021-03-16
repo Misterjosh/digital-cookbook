@@ -22,6 +22,10 @@ const API = {
         return axios.delete("api/user/:id", userId)
     },
 
+    logIn: (userInfo) => {
+        return axios.post("api/user/login", userInfo)
+    },
+
     // recipe
     createRecipe: (recipeData) => {
         return axios.post("api/recipe", recipeData)
