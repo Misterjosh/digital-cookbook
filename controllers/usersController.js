@@ -1,7 +1,4 @@
 const db = require('../models');
-const mongoose = require('mongoose');
-// findOneAndUpdate triggers a warning without this
-mongoose.set('useFindAndModify', true);
 
 module.exports = {
     create: (req, res) => {

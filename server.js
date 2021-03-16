@@ -14,6 +14,9 @@ mongoose.connect(
     }
   );
 
+// findOneAndUpdate triggers a warning without this
+mongoose.set('useFindAndModify', true);
+
 // Makes express work with JSON objects in requests
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
