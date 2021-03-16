@@ -1,8 +1,10 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+const keys = require("../config/keys");
 
 module.exports = {
-    
+
     create: (req, res) => {
         db.User.findOne({email: req.body.email})
         .then((user) => {
@@ -66,5 +68,36 @@ module.exports = {
             .then(delUser => delUser.remove())
             .then(res.json("Account Deleted!"))
             .catch(err => res.status(422).json(err));
+    },
+
+    login: (req, res) => {
+        db.User.findOne({ email: req.body.email })
+        .then((user) => {
+            if (!user) res.status(404).json({"email" : "That email doesn't exist!"});
+            bcrypt.compare(req.body.password, user.password)
+            .then((isMatch) => {
+                if (!isMatch) res.status(400).json({"password" : "That password doesn't match!"})
+                else {
+                    const payload = {
+                        id: user.id,
+                        name: user.name.first + user.name.last
+                    }
+                    jwt.sign(
+                        payload,
+                        keys.secretOrKey,
+                        {
+                            expiresIn: 900000
+                        },
+                        (err, token) => {
+                            res.json({
+                                success: true,
+                                token: "Bearer token: " + token
+                            })
+                        }
+                    )
+                }
+            })
+            .catch((err) => res.json(err.message));
+        })
     }
 };
