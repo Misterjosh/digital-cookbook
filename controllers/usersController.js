@@ -1,10 +1,35 @@
 const db = require('../models');
+const bcrypt = require('bcrypt');
 
 module.exports = {
+    
     create: (req, res) => {
-        db.User.create(req.body)
-            .then(newUser => res.json(`New account created for ${newUser.fullName}!`))
-            .catch(err => res.status(422).json(err));
+        db.User.findOne({email: req.body.email})
+        .then((user) => {
+            if(user) {
+                res.status(404).json({"email" : "That email is already registered!"})
+            }
+            else {
+                const registerUser = new db.User({
+                    name: {
+                        first: req.body.name.first,
+                        last: req.body.name.last
+                    },
+                    email: req.body.email,
+                    password: req.body.password
+                })
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(registerUser.password, salt, (err, hash) => {
+                        if(err) throw err;
+                        registerUser.password = hash;
+                        registerUser.save()
+                        .then((user) => res.json(user))
+                        .catch((err) => console.log(err));
+                    })
+                })
+            }
+        })
+        .catch((err) => console.log(err));
     },
 
     findById: (req, res) => {
