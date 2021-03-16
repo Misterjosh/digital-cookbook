@@ -10,4 +10,7 @@ router.route("/:id")
     .put(usersController.update)
     .delete(usersController.delete);
 
+router.route("/login")
+    .post(usersController.login);
+
 module.exports = router;
