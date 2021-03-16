@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../components/navbar/navbar.js';
 import LogIn from '../components/loginForm/loginForm';
 import Footer from '../components/footer/footer';
-// import API from '../utils/api';
+import API from '../utils/api';
 
 // Uses state to make the forms work right
 class Home extends Component {
@@ -20,6 +20,27 @@ class Home extends Component {
         });
     };
 
+    onSubmit = event => {
+        event.preventDefault();
+        if (this.state.email === "" || this.state.password === "") {
+            return;
+        }
+        this.userInfo = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        console.log(this.userInfo);
+        // return this.userInfo;
+        API.logIn(this.userInfo)
+            .then(function (jwt) {
+                // console.log(response.data.token)
+                localStorage.setItem('jwt', jwt.data.token)
+                window.location.replace("/user")
+            })
+            .catch((err) => console.log(err))
+
+    };
+
     render() {
         return (
             <div style={{textAlign:"center"}}>
@@ -31,7 +52,7 @@ class Home extends Component {
                         email={this.state.email}
                         password={this.state.password}
                         handleInputChange={this.handleInputChange}
-                        // onSubmit={this.onSubmit}
+                        onSubmit={this.onSubmit}
                     />
                 </div>
                 <Footer />
