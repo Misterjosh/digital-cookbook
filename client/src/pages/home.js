@@ -29,11 +29,9 @@ class Home extends Component {
             email: this.state.email,
             password: this.state.password
         }
-        console.log(this.userInfo);
-        // return this.userInfo;
+        
         API.logIn(this.userInfo)
             .then(function (jwt) {
-                // console.log(response.data.token)
                 localStorage.setItem('jwt', jwt.data.token)
                 window.location.replace("/user")
             })
