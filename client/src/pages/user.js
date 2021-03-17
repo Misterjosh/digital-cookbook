@@ -6,11 +6,10 @@ import jwt_decode from 'jwt-decode';
 
 let userTokenName;
 
-const getTokenName = function () {
+const getTokenName = () => {
     userTokenName = window.localStorage.getItem('jwt')
     userTokenName = userTokenName.replace(/Bearer token: /, '')
     const decoded = jwt_decode(userTokenName);
-    console.log(decoded);
     userTokenName = `${decoded.fName} ${decoded.lName}`
     return userTokenName
 };
