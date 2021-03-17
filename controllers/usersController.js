@@ -80,7 +80,8 @@ module.exports = {
                 else {
                     const payload = {
                         id: user.id,
-                        name: user.name.first + user.name.last
+                        fName: user.name.first,
+                        lName: user.name.last
                     }
                     jwt.sign(
                         payload,
