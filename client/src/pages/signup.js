@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Navbar from '../components/navbar/navbar.js';
+import Navbar from '../components/navbar/Navbar.js';
 import SignupForm from '../components/signupForm/signupForm';
-import Footer from '../components/footer/footer';
+import Footer from '../components/footer/Footer';
 import API from '../utils/api';
 
 // Uses state to make the forms work right

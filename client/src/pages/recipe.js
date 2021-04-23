@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from '../components/navbar/navbar.js';
-import Footer from '../components/footer/footer';
+import Navbar from '../components/navbar/Navbar.js';
+import Footer from '../components/footer/Footer';
 import Options from '../components/recipePageMenu/recipePageMenu';
 
 const goHome = () => {

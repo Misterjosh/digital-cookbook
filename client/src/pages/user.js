@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../components/navbar/navbar.js';
+import Navbar from '../components/navbar/Navbar.js';
 import Options from '../components/userPageMenu/userPageMenu';
-import Footer from '../components/footer/footer';
+import Footer from '../components/footer/Footer';
 import jwt_decode from 'jwt-decode';
 
 let userTokenName;
