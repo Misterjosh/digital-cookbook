@@ -23,7 +23,7 @@ function App() {
         <Route exact path="/recipe" component={Recipe} />
         <Route exact path="/recipe/create" component={RecipeCreate} />
         <Route exact path="/recipe/view" component={RecipeView} />
-        <Route exact path="/user/recipes/view" component={RecipeViewAll} />
+        <Route exact path="/recipes/view/user" component={RecipeViewAll} />
         <Route exact path="/recipes/view" component={RecipesView} />
         <Route exact path="/recipe/delete" component={RecipeDelete} />
         <Route exact path="/user" component={User} />
