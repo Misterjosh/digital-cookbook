@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../components/navbar/Navbar.js';
+import NavbarComp from '../components/navbar/Navbar';
 import LogIn from '../components/loginForm/LoginForm';
 import Footer from '../components/footer/Footer';
 import API from '../utils/api';
@@ -32,8 +32,8 @@ class Home extends Component {
         
         API.logIn(this.userInfo)
             .then(function (jwt) {
-                localStorage.setItem('jwt', jwt.data.token)
-                window.location.replace("/user")
+                localStorage.setItem('dcb-jwt', jwt.data.token)
+                window.location.replace("/recipes/view")
             })
             .catch((err) => console.log(err))
 
@@ -42,7 +42,7 @@ class Home extends Component {
     render() {
         return (
             <div style={{textAlign:"center"}}>
-                <Navbar />
+                <NavbarComp />
                 <div className="home">
                     <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
                     <h3><span className="red-span">Please log in or </span><a className="blue-link" href="/signup">sign up</a></h3>
