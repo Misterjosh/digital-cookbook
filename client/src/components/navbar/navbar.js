@@ -1,36 +1,93 @@
-import React, { Component } from 'react';
-import { MenuItems } from "./menuItems";
-import { Button } from "./button";
+import React, { useState } from 'react';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import './navbar.css';
 
+const NavbarComp = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-class Navbar extends Component {
-    state = { toggle: false }
+  const toggle = () => setIsOpen(!isOpen);
 
-    handleClick = () => {
-        this.setState({ toggle: !this.state.toggle })
-    }
-
-    render() {
-        return(
-            <nav className="navbarItems">
-                <h1 className="navbar-logo">Digital Cookbook<i className="fas fa-book"></i></h1>
-                <div className="menu-icon" onClick={this.handleClick}>
-                    <i className={this.state.toggle ? 'fas fa-times' : 'fas fa-bars'}></i>
-                </div>
-                <ul className={this.state.toggle ? "nav-menu active" : "nav-menu"}>
-                    {MenuItems.map((item, index) => {
-                        return (
-                            <li key={index}>
-                                <a className={item.cName} href={item.url}>{item.title}</a>
-                            </li>
-                        )
-                    })}
-                </ul>
-                <Button>Sign up</Button>
-            </nav>
-        )
-    }
+  if (localStorage.getItem('dcb-jwt')) {
+    return (
+        <div>
+          <Navbar className="navbar" light expand="md">
+            <NavbarBrand className="navbrand" href="/">Digial Cookbook <i className="fas fa-book-open"></i></NavbarBrand>
+            <NavbarToggler onClick={toggle} />
+            <Collapse isOpen={isOpen} navbar>
+              <Nav className="mr-auto" navbar>
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                        User Options
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem href="/user/view">
+                            View Profile
+                        </DropdownItem>
+                        <DropdownItem href="/user/edit">
+                            Edit Profile
+                        </DropdownItem>
+                        <DropdownItem href="/user/delete">
+                            Delete Profile
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                        Recipes
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem href="/recipes/view">
+                            Browse Recipes
+                        </DropdownItem>
+                        <DropdownItem href="/recipes/view/user">
+                            Your Recipes
+                        </DropdownItem>
+                        <DropdownItem href="/recipe/create">
+                            Create a Recipe
+                        </DropdownItem>
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+                <NavItem>
+                  <NavLink href="/user">User</NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Navbar>
+        </div>
+      );
+  } else {
+    return (
+        <div>
+          <Navbar className="navbar" light expand="md">
+            <NavbarBrand className="navbrand" href="/">Digial Cookbook <i className="fas fa-book"></i></NavbarBrand>
+            <NavbarToggler onClick={toggle} />
+            <Collapse isOpen={isOpen} navbar>
+              <Nav className="mr-auto" navbar>
+                <NavItem>
+                  <NavLink href="/">Log In</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/signup">Sign Up</NavLink>
+                </NavItem>
+              </Nav>
+            </Collapse>
+          </Navbar>
+        </div>
+      );
+  }
+  
 }
 
-export default Navbar;
+export default NavbarComp;
