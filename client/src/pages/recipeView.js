@@ -1,11 +1,11 @@
 import React from 'react';
-import Navbar from '../components/navbar/Navbar';
+import NavbarComp from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 
 function recipeView() {
     return (
         <div>
-            <Navbar />
+            <NavbarComp />
                 <h1>Looking at a Recipe</h1>
             <Footer />
         </div>

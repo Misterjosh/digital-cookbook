@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../components/navbar/Navbar.js';
+import NavbarComp from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import Options from '../components/recipePageMenu/recipePageMenu';
 
@@ -11,7 +11,7 @@ export default function recipe() {
     if (localStorage.getItem('jwt')) {
         return (
             <div>
-                <Navbar />
+                <NavbarComp />
                 <Options />
                 <Footer />
             </div>
@@ -19,7 +19,7 @@ export default function recipe() {
     } else
         return (
             <div style={{textAlign:"center"}}>
-                <Navbar />
+                <NavbarComp />
                 <h1><span className="red-span">You must log in</span></h1>
                 <button onClick={goHome}>Home</button>
                 <Footer />

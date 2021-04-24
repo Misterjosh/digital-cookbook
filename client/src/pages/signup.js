@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from '../components/navbar/Navbar.js';
+import NavbarComp from '../components/navbar/Navbar';
 import SignupForm from '../components/signupForm/signupForm';
 import Footer from '../components/footer/Footer';
 import API from '../utils/api';
@@ -45,7 +45,7 @@ class Signup extends Component {
     render() {
         return (
             <div style={{textAlign:"center"}}>
-                <Navbar />
+                <NavbarComp />
                     <div>
                         <h1><span className="red-span">Create Your Profile Here</span></h1>
                         <h3><span className="red-span">or </span><a className="blue-link" href="/">Login</a></h3>

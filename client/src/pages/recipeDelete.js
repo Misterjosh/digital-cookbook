@@ -1,11 +1,11 @@
 import React from 'react';
-import Navbar from '../components/navbar/Navbar';
+import NavbarComp from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 
 function recipeDelete() {
     return (
         <div>
-            <Navbar />
+            <NavbarComp />
                 <h1>Recipe Deleted!</h1>
             <Footer />
         </div>
