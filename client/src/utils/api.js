@@ -7,44 +7,44 @@ const API = {
     },
 
     getUserInfo: (userId) => {
-        return axios.get("api/user/:id", userId)
+        return axios.get("/api/user/:id", userId)
     },
 
     getAllUsers: () => {
-        return axios.get("api/user")
+        return axios.get("/api/user")
     },
 
     updateUser: (userData) => {
-        return axios.put("api/user/:id", userData)
+        return axios.put("/api/user/:id", userData)
     },
 
     deleteUser: (userId) => {
-        return axios.delete("api/user/:id", userId)
+        return axios.delete("/api/user/:id", userId)
     },
 
     logIn: (userInfo) => {
-        return axios.post("api/user/login", userInfo)
+        return axios.post("/api/user/login", userInfo)
     },
 
     // recipe
     createRecipe: (recipeData) => {
-        return axios.post("api/recipe", recipeData)
+        return axios.post("/api/recipe", recipeData)
     },
 
     getRecipeInfo: (recipeId) => {
-        return axios.get("api/recipe/:id", recipeId)
+        return axios.get("/api/recipe/:id", recipeId)
     },
 
     getAllRecipes: () => {
-        return axios.get("api/recipe")
+        return axios.get("/api/recipe")
     },
 
     updateRecipe: (recipeData) => {
-        return axios.put("api/recipe/:id", recipeData)
+        return axios.put("/api/recipe/:id", recipeData)
     },
 
     deleteRecipe: (recipeId) => {
-        return axios.delete("api/recipe/:id", recipeId)
+        return axios.delete("/api/recipe/:id", recipeId)
     }
 
 }
