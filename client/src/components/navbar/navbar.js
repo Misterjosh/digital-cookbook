@@ -14,6 +14,16 @@ import {
 } from 'reactstrap';
 import './navbar.css';
 
+const logOut = () => {
+  localStorage.removeItem('dcb-jwt');
+  localStorage.removeItem('first');
+  localStorage.removeItem('last');
+  localStorage.removeItem('email');
+  localStorage.removeItem('created');
+  localStorage.removeItem('updated');
+  window.location.replace("/");
+}
+
 const NavbarComp = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -64,6 +74,7 @@ const NavbarComp = () => {
                 </NavItem>
               </Nav>
             </Collapse>
+            <button onClick={logOut}>Log Out</button>
           </Navbar>
         </div>
       );
