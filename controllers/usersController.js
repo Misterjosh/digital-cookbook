@@ -35,7 +35,7 @@ module.exports = {
     },
 
     findById: (req, res) => {
-        db.User.findOne(req.query.id)
+        db.User.findOne({ _id: req.query.id })
             .then(currentUser => res.json(currentUser))
             .catch(err => res.status(422).json(err));
     },
