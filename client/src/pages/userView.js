@@ -47,7 +47,13 @@ export default class userView extends React.Component {
                             <div style={{textAlign:"center"}}>
                                 <NavbarComp />
                                 <h1><span className="red-span">Profile Details for {this.state.person.fName} {this.state.person.lName}</span></h1><br />
-                                <UserView first={this.state.person.fName} last={this.state.person.lName} email={this.state.person.email} created={this.state.person.created} updated={this.state.person.updated} />
+                                <UserView 
+                                    first={this.state.person.fName} 
+                                    last={this.state.person.lName} 
+                                    email={this.state.person.email} 
+                                    created={this.state.person.created} 
+                                    updated={this.state.person.updated} 
+                                />
                                 <Footer />
                             </div>
                         </div>
