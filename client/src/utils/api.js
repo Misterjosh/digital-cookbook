@@ -14,8 +14,8 @@ const API = {
         return axios.get("/api/user")
     },
 
-    updateUser: (userData) => {
-        return axios.put("/api/user/:id", userData)
+    updateUser: (id, userData) => {
+        return axios.put(`/api/user/:${id}`, userData)
     },
 
     deleteUser: (userId) => {
