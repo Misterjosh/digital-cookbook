@@ -58,9 +58,17 @@ module.exports = {
             updated: new Date
         };
 
-        db.User.findOneAndUpdate(userId, { $set: userParams })
-            .then(upUser => res.json(`Profile Updated for: ${upUser.fullName}`))
-            .catch(err => res.status(422).json(err));
+        db.User.findOne({email: req.body.email})
+        .then((user) => {
+            if(user) {
+                res.status(404).json({"email" : "That email is already registered!"})
+            } else {
+                db.User.findOneAndUpdate(userId, { $set: userParams })
+                .then(upUser => res.json(`Profile Updated for: ${upUser.id}`))
+                .catch(err => res.json(err));
+            }
+        })
+        .catch((error) => console.log(error));
     },
     
     delete: (req, res) => {
