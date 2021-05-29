@@ -40,22 +40,36 @@ class Home extends Component {
     };
 
     render() {
-        return (
-            <div style={{textAlign:"center"}}>
-                <NavbarComp />
-                <div className="home">
-                    <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
-                    <h3><span className="red-span">Please log in or </span><a className="blue-link" href="/signup">sign up</a></h3>
-                    <LogIn
-                        email={this.state.email}
-                        password={this.state.password}
-                        handleInputChange={this.handleInputChange}
-                        onSubmit={this.onSubmit}
-                    />
+        if (!localStorage.getItem('dcb-jwt')) {
+            return (
+                <div style={{textAlign:"center"}}>
+                    <NavbarComp />
+                    <div className="home">
+                        <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
+                        <h3><span className="red-span">Please log in or </span><a className="blue-link" href="/signup">sign up</a></h3>
+                        <LogIn
+                            email={this.state.email}
+                            password={this.state.password}
+                            handleInputChange={this.handleInputChange}
+                            onSubmit={this.onSubmit}
+                        />
+                    </div>
+                    <Footer />
                 </div>
-                <Footer />
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div style={{textAlign:"center"}}>
+                    <NavbarComp />
+                    <div className="home">
+                        <h1><span className="red-span">Welcome Back!</span></h1>
+                        <h1><span className="red-span">Please use the navbar to reach your destination</span></h1>
+                    </div>
+                    <Footer />
+                </div>
+            ) 
+        }
+
     }
 
 }
