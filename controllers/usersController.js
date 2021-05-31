@@ -47,25 +47,57 @@ module.exports = {
     },
 
     update: (req, res) => {
-        let userId = req.params.id;
-        let userParams = {
-            name: {
-                first: req.body.first,
-                last: req.body.last
-            },
-            email: req.body.email,
-            password: req.body.password,
-            updated: new Date
-        };
-
         db.User.findOne({email: req.body.email})
         .then((user) => {
             if(user) {
                 res.status(404).json({"email" : "That email is already registered!"})
             } else {
-                db.User.findOneAndUpdate(userId, { $set: userParams })
-                .then(upUser => res.json(`Profile Updated for: ${upUser.id}`))
-                .catch(err => res.json(err));
+                const userId = req.params.id;
+                const userParams = {
+                    name: {
+                        first: req.body.name.first,
+                        last: req.body.name.last
+                    },
+                    email: req.body.email,
+                    password: req.body.password,
+                    updated: new Date
+                }
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(userParams.password, salt, (err, hash) => {
+                        if(err) throw err;
+                        userParams.password = hash;
+                        db.User.findById(userId)
+                        .then((user) => user.updateOne(userParams))
+                        .then(res.json(`Profile Updated`))
+                        .catch((error) => console.log(error))
+                    })
+                })
+            }
+        })
+        .catch((error) => console.log(error));
+    },
+
+    // if user doesn't include a password change, this avoids makeing a twice hashed password
+    updateNoPass: (req, res) => {
+        db.User.findOne({email: req.body.email})
+        .then((user) => {
+            if(user) {
+                res.status(404).json({"email" : "That email is already registered!"})
+            } else {
+                const userId = req.params.id;
+                const userParams = {
+                    name: {
+                        first: req.body.name.first,
+                        last: req.body.name.last
+                    },
+                    email: req.body.email,
+                    password: req.body.password,
+                    updated: new Date
+                }
+                db.User.findById(userId)
+                .then((user) => user.updateOne(userParams))
+                .then(res.json(`Profile Updated`))
+                .catch((error) => console.log(error))
             }
         })
         .catch((error) => console.log(error));
