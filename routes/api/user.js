@@ -10,6 +10,9 @@ router.route("/:id")
     .put(usersController.update)
     .delete(usersController.delete);
 
+router.route("/no-pass/:id")
+    .put(usersController.updateNoPass)
+
 router.route("/login")
     .post(usersController.login);
 
