@@ -15,7 +15,11 @@ const API = {
     },
 
     updateUser: (id, userData) => {
-        return axios.put(`/api/user/:${id}`, userData)
+        return axios.put(`/api/user/${id}`, userData)
+    },
+
+    updateUserNoPass: (id, userData) => {
+        return axios.put(`/api/user/no-pass/${id}`, userData)
     },
 
     deleteUser: (userId) => {
