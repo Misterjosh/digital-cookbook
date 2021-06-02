@@ -23,7 +23,7 @@ const API = {
     },
 
     deleteUser: (userId) => {
-        return axios.delete("/api/user/:id", userId)
+        return axios.delete(`/api/user/${userId}`)
     },
 
     logIn: (userInfo) => {
