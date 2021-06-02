@@ -140,7 +140,6 @@ module.exports = {
     },
     
     delete: (req, res) => {
-        console.log("line 143" + req.params.id);
         db.User.findByIdAndDelete(req.params.id)
             .then(delUser => delUser.remove())
             .then(res.json("Account Deleted!"))
