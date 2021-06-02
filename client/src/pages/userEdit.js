@@ -4,6 +4,7 @@ import EditUser from '../components/editUser/EditUser';
 import Footer from '../components/footer/Footer';
 import API from '../utils/api';
 import jwt_decode from 'jwt-decode';
+import UserView from '../components/userView/UserView';
 
 // Uses state to make the forms work right
 class userEdit extends Component {
@@ -14,9 +15,11 @@ class userEdit extends Component {
         lName: "",
         email: "",
         password: "",
-        message: ""
+        message: "",
+        id: ""
     };
 
+    // providing id and current user data
     async componentDidMount() {
         if (localStorage.getItem('dcb-jwt')) {
             const token = window.localStorage.getItem('dcb-jwt');
@@ -29,10 +32,12 @@ class userEdit extends Component {
                         fName: user.data.name.first,
                         lName: user.data.name.last,
                         email: user.data.email,
-                        password: user.data.password
+                        password: user.data.password,
+                        created: user.data.created,
+                        updated: user.data.updated
                     };
             // password is not set in state to avoid showing the curent and fully hashed password as you can't unhash it
-            this.setState({ person: userData, loading: false, fName: user.data.name.first, lName: user.data.name.last, email: user.data.email });
+            this.setState({ person: userData, loading: false, id: userId });
         })
             .catch((error) => console.log(error));
         }
@@ -58,347 +63,377 @@ class userEdit extends Component {
 
         // 0001 if only password has a value, other values set to original
         if (this.state.fName === "" && this.state.lName === "" && this.state.email === "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.person.fName,
                     last: this.state.person.lName
                 },
                 email: this.state.person.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+            // if the message was set, it needs cleared
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 0010 if only email has a value, other values set to original
         if (this.state.fName === "" && this.state.lName === "" && this.state.email !== "" && this.state.password === "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.person.fName,
                     last: this.state.person.lName
                 },
                 email: this.state.email,
-                password: this.state.person.password
+                password: this.state.person.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUserNoPass(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 0011 if email and password have a new values, other values set to original
         if (this.state.fName === "" && this.state.lName === "" && this.state.email !== "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.person.fName,
                     last: this.state.person.lName
                 },
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 0100 if only last name has a value, other values set to original
         if (this.state.fName === "" && this.state.lName !== "" && this.state.email === "" && this.state.password === "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.person.fName,
                     last: this.state.lName
                 },
                 email: this.state.person.email,
-                password: this.state.person.password
+                password: this.state.person.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUserNoPass(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 0101 if last name and password have new values, other values set to original
         if (this.state.fName === "" && this.state.lName !== "" && this.state.email === "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.person.fName,
                     last: this.state.lName
                 },
                 email: this.state.person.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 0110 if last name and email have new values, other values set to original
         if (this.state.fName === "" && this.state.lName !== "" && this.state.email !== "" && this.state.password === "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.person.fName,
                     last: this.state.lName
                 },
                 email: this.state.email,
-                password: this.state.person.password
+                password: this.state.person.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUserNoPass(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 0111 if first name is blank it will be set to its default value
         if (this.state.fName === "" && this.state.lName !== "" && this.state.email !== "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.person.fName,
                     last: this.state.lName
                 },
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 1000 if only first name has a value, other values set to original
         if (this.state.fName !== "" && this.state.lName === "" && this.state.email === "" && this.state.password === "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.person.lName
                 },
                 email: this.state.person.email,
-                password: this.state.person.password
+                password: this.state.person.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUserNoPass(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 1001 if last name and email are blank, the rest will be set to default values
         if (this.state.fName !== "" && this.state.lName === "" && this.state.email === "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.person.lName
                 },
                 email: this.state.person.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 1010 if last name and password are blank, the rest will be set to default values
         if (this.state.fName !== "" && this.state.lName === "" && this.state.email !== "" && this.state.password === "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.person.lName
                 },
                 email: this.state.email,
-                password: this.state.person.password
+                password: this.state.person.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUserNoPass(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 1011 if last name is blank, it will be set to its default value
         if (this.state.fName !== "" && this.state.lName === "" && this.state.email !== "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.person.lName
                 },
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 1100 if email and password are blank, they will be set to their default values
         if (this.state.fName !== "" && this.state.lName !== "" && this.state.email === "" && this.state.password === "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.lName
                 },
                 email: this.state.person.email,
-                password: this.state.person.password
+                password: this.state.person.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUserNoPass(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log(err))
         }
 
         // 1101 if email is blank, it will be set to its default value
         if (this.state.fName !== "" && this.state.lName !== "" && this.state.email === "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.lName
                 },
                 email: this.state.person.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log("Catch" + err))
         }
 
         // 1110 if password is blank, it will be set to its default value
         if (this.state.fName !== "" && this.state.lName !== "" && this.state.email !== "" && this.state.password === "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.lName
                 },
                 email: this.state.email,
-                password: this.state.person.password
+                password: this.state.person.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUserNoPass(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log("Catch" + err))
         }
 
         // 1111 no are blank, then we use all the new info
         if (this.state.fName !== "" && this.state.lName !== "" && this.state.email !== "" && this.state.password !== "") {
-            let editData = {
+
+            const editData = {
                 name: {
                     first: this.state.fName,
                     last: this.state.lName
                 },
                 email: this.state.email,
-                password: this.state.password
+                password: this.state.password,
+                current: this.state.person.email
             }
+
             this.setState({ message: "" });
-            
-            const token = window.localStorage.getItem('dcb-jwt');
-            const noBearer = token.replace(/Bearer token: /, '');
-            const decoded = jwt_decode(noBearer);
-            const userId = `${decoded.id}`;
-            console.log(editData);
-            console.log(userId);
-            // API.updateUser({ params: { id: userId, userData: editData } })
-            //     .then(window.location.replace("/user/view"))
-            //     .catch((err) => console.log(err))
+
+            API.updateUser(this.state.id, editData)
+                .then((response) => {
+                    this.setState({ message: response.data });
+                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                        window.location.replace("/user/view")
+                    }, 1800);};
+                })
+                .catch((err) => console.log("Catch" + err))
         }
 
     };
@@ -417,7 +452,15 @@ class userEdit extends Component {
                         <div style={{textAlign:"center"}}>
                             <NavbarComp />
                                 <div>
-                                    <h1><span className="red-span">Edit Your Profile Here</span></h1>
+                                    <h1><span className="red-span">Your Current Profile</span></h1><br />
+                                        <UserView 
+                                            first={this.state.person.fName} 
+                                            last={this.state.person.lName} 
+                                            email={this.state.person.email} 
+                                            created={this.state.person.created} 
+                                            updated={this.state.person.updated} 
+                                        /><br />
+                                    <h1><span className="red-span">What would you like to change?</span></h1>
                                         <EditUser 
                                                 fName={this.state.fName}
                                                 lName={this.state.lName}
@@ -425,8 +468,8 @@ class userEdit extends Component {
                                                 password={this.state.password}
                                                 handleInputChange={this.handleInputChange}
                                                 onSubmit={this.onSubmit}
-                                        />
-                                        <div>{this.state.message}</div>
+                                        /><br />
+                                        <div><h2><span className="red-span">{this.state.message}</span></h2></div>
                                 </div>    
                             <Footer />
                         </div>
