@@ -16,11 +16,6 @@ import './navbar.css';
 
 const logOut = () => {
   localStorage.removeItem('dcb-jwt');
-  localStorage.removeItem('first');
-  localStorage.removeItem('last');
-  localStorage.removeItem('email');
-  localStorage.removeItem('created');
-  localStorage.removeItem('updated');
   window.location.replace("/");
 }
 
@@ -69,9 +64,6 @@ const NavbarComp = () => {
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
-                <NavItem>
-                  <NavLink href="/user">User</NavLink>
-                </NavItem>
               </Nav>
             </Collapse>
             <button onClick={logOut}>Log Out</button>
