@@ -140,10 +140,11 @@ module.exports = {
     },
     
     delete: (req, res) => {
+        console.log("line 143" + req.params.id);
         db.User.findByIdAndDelete(req.params.id)
             .then(delUser => delUser.remove())
             .then(res.json("Account Deleted!"))
-            .catch(err => res.status(422).json(err));
+            .catch(err => console.log(err));
     },
 
     login: (req, res) => {
@@ -155,9 +156,7 @@ module.exports = {
                 if (!isMatch) res.status(400).json({"password" : "That password doesn't match!"})
                 else {
                     const payload = {
-                        id: user.id,
-                        fName: user.name.first,
-                        lName: user.name.last
+                        id: user.id
                     }
                     jwt.sign(
                         payload,
