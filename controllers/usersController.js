@@ -49,8 +49,29 @@ module.exports = {
     update: (req, res) => {
         db.User.findOne({email: req.body.email})
         .then((user) => {
-            if(user) {
-                res.status(404).json({"email" : "That email is already registered!"})
+            if(user && user.email !== req.body.current) {
+                res.send("That email address is already in use!")
+            } else if (user && user.email === req.body.current) {
+                const userId = req.params.id;
+                const userParams = {
+                    name: {
+                        first: req.body.name.first,
+                        last: req.body.name.last
+                    },
+                    email: req.body.email,
+                    password: req.body.password,
+                    updated: new Date
+                }
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(userParams.password, salt, (err, hash) => {
+                        if(err) throw err;
+                        userParams.password = hash;
+                        db.User.findById(userId)
+                        .then((user) => user.updateOne(userParams))
+                        .then(res.json("Profile Updated!"))
+                        .catch((error) => console.log(error))
+                    })
+                })
             } else {
                 const userId = req.params.id;
                 const userParams = {
@@ -68,7 +89,7 @@ module.exports = {
                         userParams.password = hash;
                         db.User.findById(userId)
                         .then((user) => user.updateOne(userParams))
-                        .then(res.json(`Profile Updated`))
+                        .then(res.json("Profile Updated!"))
                         .catch((error) => console.log(error))
                     })
                 })
@@ -81,8 +102,23 @@ module.exports = {
     updateNoPass: (req, res) => {
         db.User.findOne({email: req.body.email})
         .then((user) => {
-            if(user) {
-                res.status(404).json({"email" : "That email is already registered!"})
+            if(user && user.email !== req.body.current) {
+                res.send("That email address is already in use!")
+            } else if (user && user.email === req.body.current) {
+                const userId = req.params.id;
+                const userParams = {
+                    name: {
+                        first: req.body.name.first,
+                        last: req.body.name.last
+                    },
+                    email: req.body.email,
+                    password: req.body.password,
+                    updated: new Date
+                }
+                db.User.findById(userId)
+                .then((user) => user.updateOne(userParams))
+                .then(res.json("Profile Updated!"))
+                .catch((error) => console.log(error))
             } else {
                 const userId = req.params.id;
                 const userParams = {
@@ -96,7 +132,7 @@ module.exports = {
                 }
                 db.User.findById(userId)
                 .then((user) => user.updateOne(userParams))
-                .then(res.json(`Profile Updated`))
+                .then(res.json("Profile Updated!"))
                 .catch((error) => console.log(error))
             }
         })
