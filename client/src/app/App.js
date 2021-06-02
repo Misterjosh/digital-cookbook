@@ -9,7 +9,6 @@ import RecipeView from '../pages/recipeView';
 import RecipeViewAll from '../pages/recipesView';
 import RecipesView from '../pages/recipesViewAll';
 import RecipeDelete from '../pages/recipeDelete';
-import User from '../pages/user';
 import UserView from '../pages/userView';
 import UserEdit from '../pages/userEdit';
 import UserDelete from '../pages/userDelete';
@@ -26,7 +25,6 @@ function App() {
         <Route exact path="/recipes/view/user" component={RecipeViewAll} />
         <Route exact path="/recipes/view" component={RecipesView} />
         <Route exact path="/recipe/delete" component={RecipeDelete} />
-        <Route exact path="/user" component={User} />
         <Route exact path="/user/view" component={UserView} />
         <Route exact path="/user/edit" component={UserEdit} />
         <Route exact path="/user/delete" component={UserDelete} />
