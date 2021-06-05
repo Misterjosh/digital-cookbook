@@ -36,19 +36,19 @@ const API = {
     },
 
     getRecipeInfo: (recipeId) => {
-        return axios.get("/api/recipe/:id", recipeId)
+        return axios.get(`/api/recipe/${recipeId}`)
     },
 
     getAllRecipes: () => {
         return axios.get("/api/recipe")
     },
 
-    updateRecipe: (recipeData) => {
-        return axios.put("/api/recipe/:id", recipeData)
+    updateRecipe: (id, recipeData) => {
+        return axios.put(`/api/recipe/${id}`, recipeData)
     },
 
     deleteRecipe: (recipeId) => {
-        return axios.delete("/api/recipe/:id", recipeId)
+        return axios.delete(`/api/recipe/${recipeId}`)
     }
 
 }
