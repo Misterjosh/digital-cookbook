@@ -16,6 +16,7 @@ import './navbar.css';
 
 const logOut = () => {
   localStorage.removeItem('dcb-jwt');
+  localStorage.removeItem('current-recipe');
   window.location.replace("/");
 }
 
