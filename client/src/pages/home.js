@@ -9,7 +9,8 @@ class Home extends Component {
     state = {
         email: "",
         password: "",
-        userInfo: {}
+        userInfo: {},
+        message: ""
     };
 
     // This deals with each change from a value on the form
@@ -23,8 +24,10 @@ class Home extends Component {
     onSubmit = event => {
         event.preventDefault();
         if (this.state.email === "" || this.state.password === "") {
+            this.setState({ message: "Both inputs need a value!"});
             return;
-        }
+        } else
+        this.setState({ message: ""});
         this.userInfo = {
             email: this.state.email,
             password: this.state.password
@@ -47,6 +50,7 @@ class Home extends Component {
                     <div className="home">
                         <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
                         <h3><span className="red-span">Please log in or </span><a className="blue-link" href="/signup">sign up</a></h3>
+                        <div>{this.state.message}</div>
                         <LogIn
                             email={this.state.email}
                             password={this.state.password}
