@@ -21,6 +21,12 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
 
+    findAllByAuthor: (req, res) => {
+        db.Recipe.find({authorId: req.params.id})
+            .then(allRecipes => res.json(allRecipes))
+            .catch(err => res.status(422).json(err));
+    },
+
     update: (req, res) => {
         let recipeId = req.params.id;
         let recipeParams = {
