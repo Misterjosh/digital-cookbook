@@ -42,6 +42,9 @@ const API = {
     getAllRecipes: () => {
         return axios.get("/api/recipe")
     },
+    getAllUserRecipes: (id) => {
+        return axios.get(`/api/recipe/my-recipes/${id}`)
+    },
 
     updateRecipe: (id, recipeData) => {
         return axios.put(`/api/recipe/${id}`, recipeData)
