@@ -1,16 +1,58 @@
-import React from 'react';
+import React, { Component } from 'react';
 import NavbarComp from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
+import API from '../utils/api';
+import jwt_decode from 'jwt-decode';
+import RecipeButtons from '../components/lists/RecipeButtons';
 
-function recipesView() {
-    return (
-        <div>
-            <NavbarComp />
-                <h1>Looking at User's specific recipes!</h1>
-                <h2>Once a recipe is selected and everything populates, deleting and editing a recipe can happen here.</h2>
-            <Footer />
-        </div>
-    )
+export default class recipesView extends Component {
+    state = {
+        recipeList: [],
+        message: ""
+    };
+
+    // get user id from token then get recipes submitted by user with that id
+    async componentDidMount() {
+        if (localStorage.getItem('dcb-jwt')) {
+            const token = window.localStorage.getItem('dcb-jwt');
+            const noBearer = token.replace(/Bearer token: /, '');
+            const decoded = jwt_decode(noBearer);
+            const userId = `${decoded.id}`;
+            await API.getAllUserRecipes(userId)
+                .then((recipeArray) => {
+                    if (recipeArray.data.length === 0) {
+                        this.setState({ message: "You currently have no recipes in the database."})
+                    } else {
+                        this.setState({ recipeList: recipeArray.data})
+                        console.log(recipeArray.data);
+                    }
+        })
+            .catch((error) => console.log(error));
+        }
+        
+    }
+
+    stickAndMove = (recId) => {
+        window.localStorage.setItem("current-recipe", recId);
+        window.location.replace("/recipe/view");
+    }
+
+    render() {
+        const goHome = () => {
+            window.location.replace("/")
+        };
+        if (localStorage.getItem('dcb-jwt') ) {
+            return (
+                <div style={{textAlign:"center"}}>
+                    <NavbarComp />
+                    <h1><span className="red-span">A list of your recipes</span></h1>
+                    <div>{this.state.message}</div>
+                    <RecipeButtons listVal={this.state.recipeList} click={this.stickAndMove}/>
+                    <Footer />
+                </div>
+            )
+        } else {
+            goHome();
+        }
+    }
 }
-
-export default recipesView;
