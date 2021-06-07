@@ -10,4 +10,7 @@ router.route("/:id")
     .put(recipesController.update)
     .delete(recipesController.delete);
 
+router.route("/my-recipes/:id")
+    .get(recipesController.findAllByAuthor);
+
 module.exports = router;
