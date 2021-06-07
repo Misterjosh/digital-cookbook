@@ -67,7 +67,7 @@ const NavbarComp = () => {
                 </UncontrolledDropdown>
               </Nav>
             </Collapse>
-            <button onClick={logOut}>Log Out</button>
+            <button className="btn submit-btn" style={{backgroundColor: "#c3c0c0"}} onClick={logOut}>Log Out</button>
           </Navbar>
         </div>
       );
