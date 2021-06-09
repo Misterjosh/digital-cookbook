@@ -7,8 +7,8 @@ export default class ArrayToUl extends Component {
             <div className="row">
                 <div>
                     <ul>
-                        {arrayVal ? arrayVal.map((item, index) => (
-                                    <li key={index}>{item}</li>
+                        {arrayVal ? arrayVal.map((item) => (
+                                    <li key={item._id}>{item.value}</li>
                                 )) : "Loading..."}
                     </ul>
                 </div>
