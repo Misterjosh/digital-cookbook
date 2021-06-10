@@ -38,7 +38,7 @@ export default class recipeView extends Component {
         const goHome = () => {
             window.location.replace("/")
         };
-        if (localStorage.getItem('dcb-jwt') ) {
+        if (localStorage.getItem('dcb-jwt') && localStorage.getItem('current-recipe') ) {
             return (
                 <div>
                     <NavbarComp />
