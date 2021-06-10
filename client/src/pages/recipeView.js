@@ -21,6 +21,10 @@ export default class recipeView extends Component {
             .catch((error) => console.log(error));
     }
 
+    onEditClick = () => {
+        window.location.replace("/recipe/edit");
+    }
+
     onDeleteClick = (idToDelete) => {
         if (this.state.message === "") {
             this.setState({ message: "Warning! There is no going back. Click the Delete Recipe button again to delete this recipe."})
@@ -49,7 +53,7 @@ export default class recipeView extends Component {
                             <h1><span className="red-span">{this.state.message}</span></h1>
                             <div className="row">
                                 <div className="col-2">
-                                    <button className="btn submit-btn btn-warning">Edit Recipe</button>
+                                    <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}>Edit Recipe</button>
                                 </div>
                                 <div className="col-3">
                                     <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}>Delete Recipe</button>
