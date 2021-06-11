@@ -28,8 +28,8 @@ module.exports = {
     },
 
     update: (req, res) => {
-        let recipeId = req.params.id;
-        let recipeParams = {
+        const recipeId = req.params.id;
+        const recipeParams = {
             name: req.body.name,
             source: req.body.source,
             servings: req.body.servings,
@@ -38,8 +38,9 @@ module.exports = {
             updated: new Date
         };
 
-        db.Recipe.findOneAndUpdate(recipeId, { $set: recipeParams })
-            .then(upRecipe => res.json(`Updated Recipe for: ${upRecipe.name}`))
+        db.Recipe.findById(recipeId)
+            .then((recipe) => recipe.updateOne(recipeParams))
+            .then(res.json("Recipe Updated!"))
             .catch(err => res.status(422).json(err));
     },
 
