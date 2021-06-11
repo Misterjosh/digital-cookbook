@@ -111,7 +111,7 @@ export default class recipeEdit extends Component {
                 source: this.state.recipe.source,
                 servings: this.state.recipe.servings,
                 ingredients: this.state.recipe.ingredients,
-                instructions: this.state.isntList,
+                instructions: this.state.instList,
                 author: this.state.recipe.author,
                 authorId: this.state.recipe.authorId
             }
@@ -873,7 +873,7 @@ export default class recipeEdit extends Component {
                             </div>
                             <div className="col-5">    
                             <h1><span className="red-span">What would you like to change?</span></h1>
-                            <div className="container" style={{marginTop: "2rem"}}>
+                            <div className="container" style={{marginTop: "2rem", backgroundColor: "white"}}>
 
                                 <div>
                                     <h3>Recipe Name: </h3>
@@ -889,7 +889,7 @@ export default class recipeEdit extends Component {
                                     <h3>Number of Servings: </h3>
                                     <input type="text" name="newServings" value={this.state.newServings} onChange={this.handleInputChange} /> 
                                     <span>Shows up as: </span>
-                                    <span style={{backgroundColor: "white"}}>This makes {this.state.newServings} servings.</span>
+                                    <span style={{backgroundColor: "yellow"}}>This makes {this.state.newServings} servings.</span>
                                 </div>
 
                                 <div>
