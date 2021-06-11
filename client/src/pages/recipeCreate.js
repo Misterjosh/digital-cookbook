@@ -35,25 +35,12 @@ export default class recipeCreate extends Component {
     }
 
 // On changes for each input
-    onChangeInstValue = event => {
-        this.setState({ instVal: event.target.value });
+      handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        });
       };
-
-    onChangeServingsValue = event => {
-        this.setState({ servings: event.target.value });
-      };
-
-    onChangeNameValue = event => {
-        this.setState({ name: event.target.value });
-      };
-
-    onChangeIngValue = event => {
-        this.setState({ ingVal: event.target.value });
-      };
-    
-    onChangeSourceValue = event => {
-      this.setState({ source: event.target.value });
-    };
 
 // Ingredients array add and delete functions
     onAddIng = () => {
@@ -142,17 +129,17 @@ export default class recipeCreate extends Component {
 
                       <div>
                         <h3>Recipe Name: </h3>
-                        <input type="text" value={this.state.name} onChange={this.onChangeNameValue} />
+                        <input type="text" name="name" value={this.state.name} onChange={this.handleInputChange} />
                       </div>
 
                       <div>
                         <h3>Source: </h3>
-                        <input type="text" value={this.state.source} onChange={this.onChangeSourceValue} />
+                        <input type="text" name="source" value={this.state.source} onChange={this.handleInputChange} />
                       </div>
 
                       <div>
                         <h3>Number of Servings: </h3>
-                        <input type="text" value={this.state.servings} onChange={this.onChangeServingsValue} /> 
+                        <input type="text" name="servings" value={this.state.servings} onChange={this.handleInputChange} /> 
                         <span>Shows up as: </span>
                         <span style={{backgroundColor: "white"}}>This makes {this.state.servings} servings.</span>
                       </div>
@@ -169,8 +156,9 @@ export default class recipeCreate extends Component {
 
                           <input 
                           type="text"
+                          name="ingVal"
                           value={this.state.ingVal}
-                          onChange={this.onChangeIngValue}
+                          onChange={this.handleInputChange}
                           />
 
                           <button
@@ -194,8 +182,9 @@ export default class recipeCreate extends Component {
 
                           <input 
                           type="text"
+                          name="instVal"
                           value={this.state.instVal}
-                          onChange={this.onChangeInstValue}
+                          onChange={this.handleInputChange}
                           />
 
                           <button
