@@ -8,7 +8,7 @@ export default class RecipeCard extends Component {
             <div className="row">
                 
                 <div className="col-3"></div>
-                <div className="col-6" style={{backgroundColor:'white', flexDirection: 'row', marginTop: '5rem', marginBottom: '2rem'}}>
+                <div className="col-6" style={{backgroundColor:'white', flexDirection: 'row', marginBottom: '2rem'}}>
                     <h1 style={{marginTop: "1rem"}}><span>{info.name}</span></h1><br />
                     <h3><span>Submitted by {info.author}</span></h3><br />
                     <h4><span style={{flex: 1, flexwrap: 'wrap'}}>From: {info.source}</span></h4><br />
