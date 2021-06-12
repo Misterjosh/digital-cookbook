@@ -31,8 +31,8 @@ export default class recipesViewAll extends React.Component {
             return (
                 <div style={{textAlign:"center"}}>
                     <NavbarComp />
-                    <h1><span className="red-span">Choose any Recipe to view</span></h1>
-                    <RecipeButtons listVal={this.state.recipes} click={this.stickAndMove}/>
+                    <h1 style={{paddingTop: "5rem"}}><span className="red-span">Choose any Recipe to view</span></h1>
+                    <div style={{paddingBottom: "5rem"}}><RecipeButtons listVal={this.state.recipes} click={this.stickAndMove}/></div>
                     <Footer />
                 </div>
             )

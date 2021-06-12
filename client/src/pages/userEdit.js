@@ -451,7 +451,7 @@ class userEdit extends Component {
                     <div>
                         <div style={{textAlign:"center"}}>
                             <NavbarComp />
-                                <div>
+                                <div style={{paddingTop: "5rem", paddingBottom: "5rem"}}>
                                     <h1><span className="red-span">Your Current Profile</span></h1><br />
                                         <UserView 
                                             first={this.state.person.fName} 

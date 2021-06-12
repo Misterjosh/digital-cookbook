@@ -45,9 +45,11 @@ export default class recipesView extends Component {
             return (
                 <div style={{textAlign:"center"}}>
                     <NavbarComp />
-                    <h1><span className="red-span">A list of your recipes</span></h1>
+                    <h1 style={{paddingTop: "5rem"}}><span className="red-span">A list of your recipes</span></h1>
                     <div>{this.state.message}</div>
-                    <RecipeButtons listVal={this.state.recipeList} click={this.stickAndMove}/>
+                    <div style={{paddingBottom: "5rem"}}>
+                        <RecipeButtons listVal={this.state.recipeList} click={this.stickAndMove}/>
+                    </div>
                     <Footer />
                 </div>
             )

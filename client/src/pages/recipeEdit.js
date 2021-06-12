@@ -862,7 +862,7 @@ export default class recipeEdit extends Component {
                     ) : (
                     <div>
                         <NavbarComp />
-                        <h1 style={{textAlign:"center"}} ><span className="red-span">Edit Your Recipe</span></h1><br />
+                        <h1 style={{textAlign:"center", paddingTop: "5rem"}} ><span className="red-span">Edit Your Recipe</span></h1><br />
                         <div className="row">
                             <div className="col-1"></div>
                             <div className="col-5">
@@ -955,7 +955,7 @@ export default class recipeEdit extends Component {
                             </div>
                             <div className="col-1"></div>
                         </div>
-                        <div><h2 style={{textAlign:"center"}}><span className="red-span">{this.state.message}</span></h2></div>
+                        <div style={{paddingBottom: "5rem"}}><h2 style={{textAlign:"center"}}><span className="red-span">{this.state.message}</span></h2></div>
                         <Footer />
                     </div>
                     )}

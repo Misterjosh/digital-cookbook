@@ -43,9 +43,9 @@ export default class userDelete extends React.Component {
                     <div>
                         <div style={{textAlign:"center"}}>
                             <NavbarComp />
-                            <h1><span className="red-span">Profile Details for</span></h1><br />
+                            <h1 style={{paddingTop: "5rem"}}><span className="red-span">If you are sure you want to delete your profile, click the button below.</span></h1><br />
                             <div><h1><span className="red-span">{this.state.message}</span></h1></div>
-                            <button onClick={delUser}>Delete Profile</button>
+                            <div style={{paddingBottom: "5rem"}}><button onClick={delUser}>Delete Profile</button></div>
                             <Footer />
                         </div>
                     </div>

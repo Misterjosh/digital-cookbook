@@ -47,7 +47,7 @@ class Home extends Component {
             return (
                 <div style={{textAlign:"center"}}>
                     <NavbarComp />
-                    <div className="home">
+                    <div style={{paddingTop: "5rem", paddingBottom: "5rem"}} className="home">
                         <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
                         <h3><span className="red-span">Please log in or </span><a className="blue-link" href="/signup">sign up</a></h3>
                         <div>{this.state.message}</div>
@@ -65,7 +65,7 @@ class Home extends Component {
             return (
                 <div style={{textAlign:"center"}}>
                     <NavbarComp />
-                    <div className="home">
+                    <div style={{paddingTop: "5rem", paddingBottom: "5rem"}} className="home">
                         <h1><span className="red-span">Welcome Back!</span></h1>
                         <h1><span className="red-span">Please use the navbar to reach your destination</span></h1>
                     </div>

@@ -49,7 +49,7 @@ class Signup extends Component {
         return (
             <div style={{textAlign:"center"}}>
                 <NavbarComp />
-                    <div>
+                    <div style={{paddingTop: "5rem", paddingBottom: "5rem"}}>
                         <h1><span className="red-span">Create Your Profile Here</span></h1>
                         <h3><span className="red-span">or </span><a className="blue-link" href="/">Login</a></h3>
                         <div>{this.state.message}</div>

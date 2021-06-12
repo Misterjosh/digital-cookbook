@@ -125,7 +125,7 @@ export default class recipeCreate extends Component {
                 <div>
                     <NavbarComp />
 
-                    <div className="container" style={{marginTop: "2rem"}}>
+                    <div className="container" style={{paddingTop: "6rem", paddingBottom: "5rem"}}>
 
                       <div>
                         <h3>Recipe Name: </h3>

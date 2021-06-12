@@ -46,22 +46,22 @@ export default class recipeView extends Component {
             return (
                 <div>
                     <NavbarComp />
-                    <RecipeCard recipe={this.state.recipe} />
+                    <div className="containter row-12 row-sm-12">
+                    <div className="row-12 row-sm-12" style={{paddingTop: "5rem"}}><RecipeCard recipe={this.state.recipe} /></div>
                     <div className="row">  
-                        <div className="col-3"></div>
-                        <div className="col-6" style={{textAlign:"center"}}>
+                        <div className="row" style={{textAlign:"center"}}></div>
                             <h1><span className="red-span">{this.state.message}</span></h1>
-                            <div className="row">
-                                <div className="col-2">
+                            <div style={{paddingBottom: "5rem"}}className="row">
+                                <div className="col-3"></div>
+                                <div className="col-3">
                                     <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}>Edit Recipe</button>
                                 </div>
                                 <div className="col-3">
                                     <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}>Delete Recipe</button>
                                 </div>
+                                <div className="col-3"></div>
                             </div>
-                        </div>
-                        <div className="col-3"></div>
-                        
+                    </div>
                     </div>
                     <Footer />
                 </div>

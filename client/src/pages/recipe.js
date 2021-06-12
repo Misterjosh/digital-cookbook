@@ -27,7 +27,9 @@ export class recipe extends Component {
             return (
                 <div>
                     <NavbarComp />
-                    <RecipeCard recipe={this.state.recipe} />
+                    <div style={{paddingTop: "6rem", paddingBottom: "5rem"}}>
+                        <RecipeCard recipe={this.state.recipe} />
+                    </div>
                     <Footer />
                 </div>
             )
