@@ -8,7 +8,7 @@ export default class ArrayToUl extends Component {
                 <div>
                     <ul>
                         {arrayVal ? arrayVal.map((item) => (
-                                    <li key={item._id}>{item.value}</li>
+                                    <li style={{ paddingTop: "1rem"}}key={item._id}>{item.value}</li>
                                 )) : "Loading..."}
                     </ul>
                 </div>
