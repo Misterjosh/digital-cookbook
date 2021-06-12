@@ -27,7 +27,7 @@ const NavbarComp = () => {
 
   if (localStorage.getItem('dcb-jwt')) {
     return (
-        <div>
+        <div style={{position: "fixed", width: "100%", textAlign: "center"}}>
           <Navbar className="navbar" light expand="md">
             <NavbarBrand className="navbrand" href="/">Digial Cookbook <i className="fas fa-book-open"></i></NavbarBrand>
             <NavbarToggler onClick={toggle} />
@@ -66,14 +66,14 @@ const NavbarComp = () => {
                     </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>
-            </Collapse>
             <button className="btn submit-btn" style={{backgroundColor: "#c3c0c0"}} onClick={logOut}>Log Out</button>
+            </Collapse>
           </Navbar>
         </div>
       );
   } else {
     return (
-        <div>
+        <div style={{position: "fixed", width: "100%"}}>
           <Navbar className="navbar" light expand="md">
             <NavbarBrand className="navbrand" href="/">Digial Cookbook <i className="fas fa-book"></i></NavbarBrand>
             <NavbarToggler onClick={toggle} />
