@@ -2,6 +2,7 @@ const db = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
+const { User } = require('../models');
 
 module.exports = {
 
@@ -24,9 +25,9 @@ module.exports = {
                     bcrypt.hash(registerUser.password, salt, (err, hash) => {
                         if(err) throw err;
                         registerUser.password = hash;
-                        registerUser.save()
-                        .then((user) => res.json(user))
-                        .catch((err) => console.log(err));
+                        db.User.create(registerUser)
+                        .then(res.json("Profile Created!"))
+                        .catch((error) => console.log(error))
                     })
                 })
             }
