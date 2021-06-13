@@ -860,19 +860,19 @@ export default class recipeEdit extends Component {
                     {this.state.loading || !this.state.recipe ? (
                     <div> loading ...</div>
                     ) : (
-                    <div>
+                    <div style={{overflow: "hidden"}}>
                         <NavbarComp />
-                        <h1 style={{textAlign:"center", paddingTop: "5rem"}} ><span className="red-span">Edit Your Recipe</span></h1><br />
+                        <div className="row" style={{paddingBottom: "1rem", textAlign:"center", paddingTop: "5rem"}}><h1><span className="red-span">Edit Your Recipe</span></h1><br /></div>
                         <div className="row">
-                            <div className="col-1"></div>
-                            <div className="col-5">
-                            <h2 style={{textAlign:"center"}}><span className="red-span">Current Recipe: </span></h2><br />
+                            {/* <div className="col-1"></div> */}
+                            <div className="col-lg-5 col-sm-12">
+                            <h1 style={{textAlign:"center"}}><span className="red-span">Current Recipe: </span></h1><br />
                                     <RecipeCard 
                                         recipe={this.state.recipe}
                                     /><br />
                             </div>
-                            <div className="col-5">    
-                            <h1><span className="red-span">What would you like to change?</span></h1>
+                            <div className="col-lg-5 col-sm-12">    
+                            <h1 style={{textAlign: "center"}}><span className="red-span">What would you like to change?</span></h1>
                             <div className="container" style={{marginTop: "2rem", backgroundColor: "white"}}>
 
                                 <div>
