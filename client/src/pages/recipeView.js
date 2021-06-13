@@ -44,25 +44,26 @@ export default class recipeView extends Component {
         };
         if (localStorage.getItem('dcb-jwt') && localStorage.getItem('current-recipe') ) {
             return (
-                <div>
+                <div style={{overflow: "hidden"}}>
                     <NavbarComp />
-                    <div className="containter row-12 row-sm-12">
-                    <div className="row-12 row-sm-12" style={{paddingTop: "5rem"}}><RecipeCard recipe={this.state.recipe} /></div>
-                    <div className="row">  
-                        <div className="row" style={{textAlign:"center"}}></div>
-                            <h1><span className="red-span">{this.state.message}</span></h1>
-                            <div style={{paddingBottom: "5rem"}}className="row">
-                                <div className="col-3"></div>
-                                <div className="col-3">
-                                    <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}>Edit Recipe</button>
-                                </div>
-                                <div className="col-3">
-                                    <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}>Delete Recipe</button>
-                                </div>
-                                <div className="col-3"></div>
+                    {/* <div className="containter"> */}
+                    <div className="row-12 row-sm-12" style={{paddingTop: "5rem"}}>
+                        <RecipeCard recipe={this.state.recipe} />
+                    </div>
+                    <div className="row">
+                        <h1><span className="red-span">{this.state.message}</span></h1>
+                    </div>
+                    <div style={{paddingBottom: "5rem"}} className="container">
+                        <div className="row">
+                            <div className="col-lg-2 col-sm-12" style={{textAlign: "center"}}>
+                                <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}>Edit Recipe</button>
                             </div>
+                            <div className="col-lg-2 col-sm-12" style={{textAlign: "center"}}>
+                                <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}>Delete Recipe</button>
+                            </div>
+                        </div>
                     </div>
-                    </div>
+                    {/* </div> */}
                     <Footer />
                 </div>
             )

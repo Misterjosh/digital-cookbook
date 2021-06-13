@@ -25,7 +25,7 @@ export class recipe extends Component {
         };
         if (localStorage.getItem('dcb-jwt') ) {
             return (
-                <div>
+                <div style={{overflow: "hidden"}}>
                     <NavbarComp />
                     <div style={{paddingTop: "6rem", paddingBottom: "5rem"}}>
                         <RecipeCard recipe={this.state.recipe} />

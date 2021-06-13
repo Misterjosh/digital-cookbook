@@ -43,7 +43,7 @@ export default class recipesView extends Component {
         };
         if (localStorage.getItem('dcb-jwt') ) {
             return (
-                <div style={{textAlign:"center"}}>
+                <div style={{textAlign:"center", overflow: "hidden"}}>
                     <NavbarComp />
                     <h1 style={{paddingTop: "5rem"}}><span className="red-span">A list of your recipes</span></h1>
                     <div>{this.state.message}</div>

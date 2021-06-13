@@ -29,7 +29,7 @@ export default class recipesViewAll extends React.Component {
         
         if (localStorage.getItem('dcb-jwt')) {
             return (
-                <div style={{textAlign:"center"}}>
+                <div style={{textAlign:"center", overflow: "hidden"}}>
                     <NavbarComp />
                     <h1 style={{paddingTop: "5rem"}}><span className="red-span">Choose any Recipe to view</span></h1>
                     <div style={{paddingBottom: "5rem"}}><RecipeButtons listVal={this.state.recipes} click={this.stickAndMove}/></div>
