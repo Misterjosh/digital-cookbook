@@ -27,7 +27,7 @@ export default class recipeView extends Component {
 
     onDeleteClick = (idToDelete) => {
         if (this.state.message === "") {
-            this.setState({ message: "Warning! There is no going back. Click the Delete Recipe button again to delete this recipe."})
+            this.setState({ message: "Warning! Click the Delete button again to irreversibly delete this recipe."})
         } else {
             API.deleteRecipe(idToDelete)
             .then(() => {                    
@@ -46,24 +46,16 @@ export default class recipeView extends Component {
             return (
                 <div style={{overflow: "hidden"}}>
                     <NavbarComp />
-                    {/* <div className="containter"> */}
-                    <div className="row-12 row-sm-12" style={{paddingTop: "5rem"}}>
+                    <div style={{paddingTop: "5rem", paddingBottom: "1rem"}}>
                         <RecipeCard recipe={this.state.recipe} />
                     </div>
-                    <div className="row">
-                        <h1><span className="red-span">{this.state.message}</span></h1>
-                    </div>
-                    <div style={{paddingBottom: "5rem"}} className="container">
-                        <div className="row">
-                            <div className="col-lg-2 col-sm-12" style={{textAlign: "center"}}>
-                                <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}>Edit Recipe</button>
-                            </div>
-                            <div className="col-lg-2 col-sm-12" style={{textAlign: "center"}}>
-                                <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}>Delete Recipe</button>
-                            </div>
+                    <div style={{paddingBottom: "5rem"}}>
+                        <div style={{textAlign: "center", overflow: "hidden"}}>
+                            <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}>Edit Recipe</button><br />
+                            <h1 style={{paddingTop: "1rem"}}><span className="red-span">{this.state.message}</span></h1>
+                            <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}>Delete Recipe</button>
                         </div>
                     </div>
-                    {/* </div> */}
                     <Footer />
                 </div>
             )
