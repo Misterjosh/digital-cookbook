@@ -12,6 +12,9 @@ import RecipeEdit from '../pages/recipeEdit';
 import UserView from '../pages/userView';
 import UserEdit from '../pages/userEdit';
 import UserDelete from '../pages/userDelete';
+import AdminPage from '../pages/adminPage';
+import AdminRecipesView from '../pages/adminRecipesView';
+import AdminUsersView from '../pages/adminUsersView';
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
         <Route exact path="/user/view" component={UserView} />
         <Route exact path="/user/edit" component={UserEdit} />
         <Route exact path="/user/delete" component={UserDelete} />
+        <Route exact path="/admin" component={AdminPage} />
+        <Route exact path="/admin/recipes" component={AdminRecipesView} />
+        <Route exact path="/admin/users" component={AdminUsersView} />
       </div>
     </Router>
   );
