@@ -10,7 +10,8 @@ const userSchema = new Schema({
     email: { type: String, required: true, lowercase: true, unique: true },
     password: { type: String, required: true },
     created: { type: Date, default: Date.now },
-    updated: { type: Date, default: Date.now }
+    updated: { type: Date, default: Date.now },
+    admin: {type: Boolean, required: true}
 });
 
 userSchema.virtual("fullName")
