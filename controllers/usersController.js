@@ -12,14 +12,34 @@ module.exports = {
             if(user) {
                 res.status(404).json({"email" : "That email is already registered!"})
             }
-            else {
+            else if (req.body.email === 'defaultjoshua@gmail.com') {
                 const registerUser = new db.User({
                     name: {
                         first: req.body.name.first,
                         last: req.body.name.last
                     },
                     email: req.body.email,
-                    password: req.body.password
+                    password: req.body.password,
+                    admin: true
+                })
+                bcrypt.genSalt(10, (err, salt) => {
+                    bcrypt.hash(registerUser.password, salt, (err, hash) => {
+                        if(err) throw err;
+                        registerUser.password = hash;
+                        db.User.create(registerUser)
+                        .then(res.json("Profile Created!"))
+                        .catch((error) => console.log(error))
+                    })
+                })
+            } else {
+                const registerUser = new db.User({
+                    name: {
+                        first: req.body.name.first,
+                        last: req.body.name.last
+                    },
+                    email: req.body.email,
+                    password: req.body.password,
+                    admin: false
                 })
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(registerUser.password, salt, (err, hash) => {
@@ -61,7 +81,8 @@ module.exports = {
                     },
                     email: req.body.email,
                     password: req.body.password,
-                    updated: new Date
+                    updated: new Date,
+                    admin: req.body.admin
                 }
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(userParams.password, salt, (err, hash) => {
@@ -82,7 +103,8 @@ module.exports = {
                     },
                     email: req.body.email,
                     password: req.body.password,
-                    updated: new Date
+                    updated: new Date,
+                    admin: req.body.admin
                 }
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(userParams.password, salt, (err, hash) => {
@@ -114,7 +136,8 @@ module.exports = {
                     },
                     email: req.body.email,
                     password: req.body.password,
-                    updated: new Date
+                    updated: new Date,
+                    admin: req.body.admin
                 }
                 db.User.findById(userId)
                 .then((user) => user.updateOne(userParams))
@@ -129,7 +152,8 @@ module.exports = {
                     },
                     email: req.body.email,
                     password: req.body.password,
-                    updated: new Date
+                    updated: new Date,
+                    admin: req.body.admin
                 }
                 db.User.findById(userId)
                 .then((user) => user.updateOne(userParams))
