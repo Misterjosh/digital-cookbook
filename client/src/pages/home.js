@@ -3,6 +3,7 @@ import NavbarComp from '../components/navbar/Navbar';
 import LogIn from '../components/loginForm/LoginForm';
 import Footer from '../components/footer/Footer';
 import API from '../utils/api';
+import jwt_decode from 'jwt-decode';
 
 // Uses state to make the forms work right
 class Home extends Component {
@@ -43,7 +44,17 @@ class Home extends Component {
     };
 
     render() {
-        if (!localStorage.getItem('dcb-jwt')) {
+        const checkExp = () => {
+            const token = window.localStorage.getItem('dcb-jwt');
+            const noBearer = token.replace(/Bearer token: /, '');
+            const decoded = jwt_decode(noBearer);
+            if ((parseInt(`${decoded.exp}000`) < Date.now())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        if (!localStorage.getItem('dcb-jwt') || checkExp() === false) {
             return (
                 <div style={{textAlign:"center"}}>
                     <NavbarComp />
