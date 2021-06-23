@@ -34,7 +34,8 @@ class userEdit extends Component {
                         email: user.data.email,
                         password: user.data.password,
                         created: user.data.created,
-                        updated: user.data.updated
+                        updated: user.data.updated,
+                        admin: user.data.admin
                     };
             // password is not set in state to avoid showing the curent and fully hashed password as you can't unhash it
             this.setState({ person: userData, loading: false, id: userId });
@@ -71,7 +72,8 @@ class userEdit extends Component {
                 },
                 email: this.state.person.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
             // if the message was set, it needs cleared
             this.setState({ message: "" });
@@ -96,7 +98,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.person.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -121,7 +124,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -146,7 +150,8 @@ class userEdit extends Component {
                 },
                 email: this.state.person.email,
                 password: this.state.person.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -171,7 +176,8 @@ class userEdit extends Component {
                 },
                 email: this.state.person.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -196,7 +202,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.person.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -221,7 +228,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -246,7 +254,8 @@ class userEdit extends Component {
                 },
                 email: this.state.person.email,
                 password: this.state.person.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -271,7 +280,8 @@ class userEdit extends Component {
                 },
                 email: this.state.person.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -296,7 +306,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.person.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -321,7 +332,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -346,7 +358,8 @@ class userEdit extends Component {
                 },
                 email: this.state.person.email,
                 password: this.state.person.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -371,7 +384,8 @@ class userEdit extends Component {
                 },
                 email: this.state.person.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -396,7 +410,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.person.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -421,7 +436,8 @@ class userEdit extends Component {
                 },
                 email: this.state.email,
                 password: this.state.password,
-                current: this.state.person.email
+                current: this.state.person.email,
+                admin: this.state.person.admin
             }
 
             this.setState({ message: "" });
@@ -458,7 +474,8 @@ class userEdit extends Component {
                                             last={this.state.person.lName} 
                                             email={this.state.person.email} 
                                             created={this.state.person.created} 
-                                            updated={this.state.person.updated} 
+                                            updated={this.state.person.updated}
+                                            admin={(`${this.state.person.admin}`.toUpperCase())} 
                                         /><br />
                                     <h1><span className="red-span">What would you like to change?</span></h1>
                                         <EditUser 
