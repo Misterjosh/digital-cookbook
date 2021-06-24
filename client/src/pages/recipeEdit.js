@@ -3,6 +3,7 @@ import NavbarComp from '../components/navbar/Navbar';
 import Footer from '../components/footer/Footer';
 import API from '../utils/api';
 import RecipeCard from '../components/recipeCard/RecipeCard';
+import jwt_decode from 'jwt-decode';
 
 export default class recipeEdit extends Component {
 
@@ -854,7 +855,19 @@ export default class recipeEdit extends Component {
         const goHome = () => {
             window.location.replace("/")
         };
-        if (localStorage.getItem('dcb-jwt')) {
+        const checkExp = () => {
+            const token = window.localStorage.getItem('dcb-jwt');
+            const noBearer = token.replace(/Bearer token: /, '');
+            const decoded = jwt_decode(noBearer);
+            if (( Date.now() >= (decoded.exp * 1000) )) {
+                console.log("token expired");
+                return false;
+            } else {
+                console.log("token valid");
+                return true;
+            }
+        }
+        if (localStorage.getItem('dcb-jwt') && checkExp === true) {
             return (
                 <div>
                     {this.state.loading || !this.state.recipe ? (

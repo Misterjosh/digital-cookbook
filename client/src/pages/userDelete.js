@@ -25,6 +25,18 @@ export default class userDelete extends React.Component {
         const goHome = () => {
             window.location.replace("/")
         };
+        const checkExp = () => {
+            const token = window.localStorage.getItem('dcb-jwt');
+            const noBearer = token.replace(/Bearer token: /, '');
+            const decoded = jwt_decode(noBearer);
+            if (( Date.now() >= (decoded.exp * 1000) )) {
+                console.log("token expired");
+                return false;
+            } else {
+                console.log("token valid");
+                return true;
+            }
+        }
         const delUser = () => {
             if (this.state.message === "") {
                 this.setState({ message: "Warning! There is no going back. Click button again to delete your profile."})
@@ -37,7 +49,7 @@ export default class userDelete extends React.Component {
                 })
             }
         };
-        if (localStorage.getItem('dcb-jwt')) {
+        if (localStorage.getItem('dcb-jwt') && checkExp() === true) {
             return (
                 <div>
                     <div>

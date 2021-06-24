@@ -48,9 +48,11 @@ class Home extends Component {
             const token = window.localStorage.getItem('dcb-jwt');
             const noBearer = token.replace(/Bearer token: /, '');
             const decoded = jwt_decode(noBearer);
-            if ((parseInt(`${decoded.exp}000`) < Date.now())) {
+            if (( Date.now() >= (decoded.exp * 1000) )) {
+                console.log("token expired");
                 return false;
             } else {
+                console.log("token valid");
                 return true;
             }
         }
