@@ -186,7 +186,7 @@ module.exports = {
                         payload,
                         keys.secretOrKey,
                         {
-                            expiresIn: 900000
+                            expiresIn: 1800
                         },
                         (err, token) => {
                             res.json({
