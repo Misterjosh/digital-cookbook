@@ -71,13 +71,13 @@ const NavbarComp = () => {
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem href="/user/view">
-                            View Profile
+                            View Account
                         </DropdownItem>
                         <DropdownItem href="/user/edit">
-                            Edit Profile
+                            Edit Account
                         </DropdownItem>
                         <DropdownItem href="/user/delete">
-                            Delete Profile
+                            Delete Account
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
@@ -130,13 +130,13 @@ const NavbarComp = () => {
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem href="/user/view">
-                            View Profile
+                            View Account
                         </DropdownItem>
                         <DropdownItem href="/user/edit">
-                            Edit Profile
+                            Edit Account
                         </DropdownItem>
                         <DropdownItem href="/user/delete">
-                            Delete Profile
+                            Delete Account
                         </DropdownItem>
                     </DropdownMenu>
                 </UncontrolledDropdown>
