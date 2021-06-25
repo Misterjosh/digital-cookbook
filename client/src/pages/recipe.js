@@ -4,6 +4,7 @@ import Footer from '../components/footer/Footer';
 import API from '../utils/api';
 import RecipeCard from '../components/recipeCard/RecipeCard';
 import jwt_decode from 'jwt-decode';
+import ReactToPrint from 'react-to-print';
 
 export class recipe extends Component {
     state = {
@@ -41,7 +42,13 @@ export class recipe extends Component {
                 <div style={{overflow: "hidden"}}>
                     <NavbarComp />
                     <div style={{paddingTop: "6rem", paddingBottom: "5rem"}}>
-                        <RecipeCard recipe={this.state.recipe} />
+                        <RecipeCard recipe={this.state.recipe} ref={(el) => (this.componentRef = el)} />
+                        <div style={{textAlign: "center", overflow: "hidden", paddingTop: "1rem"}}>
+                        <ReactToPrint
+                            trigger={() => <button className="btn submit-btn btn-primary"><i class="fas fa-print"></i> Print/Save</button>}
+                            content={() => this.componentRef}
+                        />
+                        </div>
                     </div>
                     <Footer />
                 </div>

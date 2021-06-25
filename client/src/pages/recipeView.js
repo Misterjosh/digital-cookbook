@@ -4,6 +4,7 @@ import Footer from '../components/footer/Footer';
 import API from '../utils/api';
 import RecipeCard from '../components/recipeCard/RecipeCard';
 import jwt_decode from 'jwt-decode';
+import ReactToPrint from 'react-to-print';
 
 export default class recipeView extends Component {
     state = {
@@ -60,10 +61,15 @@ export default class recipeView extends Component {
                 <div style={{overflow: "hidden"}}>
                     <NavbarComp />
                     <div style={{paddingTop: "5rem", paddingBottom: "1rem"}}>
-                        <RecipeCard recipe={this.state.recipe} />
+                        <RecipeCard recipe={this.state.recipe} ref={(el) => (this.componentRef = el)} />
                     </div>
                     <div style={{paddingBottom: "5rem"}}>
                         <div style={{textAlign: "center", overflow: "hidden"}}>
+                            <ReactToPrint 
+                                trigger={() => <button className="btn submit-btn btn-primary"><i class="fas fa-print"></i> Print/Save</button>}
+                                content={() => this.componentRef}
+                            /><br />
+                            <h1 style={{paddingTop: "1rem"}}><span className="red-span"></span></h1>
                             <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}><i class="fas fa-edit"></i> Edit Recipe</button><br />
                             <h1 style={{paddingTop: "1rem"}}><span className="red-span">{this.state.message}</span></h1>
                             <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}><i class="fas fa-trash-alt"></i> Delete Recipe</button>
