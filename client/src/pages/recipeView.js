@@ -64,9 +64,9 @@ export default class recipeView extends Component {
                     </div>
                     <div style={{paddingBottom: "5rem"}}>
                         <div style={{textAlign: "center", overflow: "hidden"}}>
-                            <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}>Edit Recipe</button><br />
+                            <button className="btn submit-btn btn-warning" onClick={() => this.onEditClick()}><i class="fas fa-edit"></i> Edit Recipe</button><br />
                             <h1 style={{paddingTop: "1rem"}}><span className="red-span">{this.state.message}</span></h1>
-                            <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}>Delete Recipe</button>
+                            <button className="btn submit-btn btn-danger" onClick={() => this.onDeleteClick(this.state.recipeId)}><i class="fas fa-trash-alt"></i> Delete Recipe</button>
                         </div>
                     </div>
                     <Footer />
