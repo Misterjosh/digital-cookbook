@@ -39,7 +39,7 @@ export default class userDelete extends React.Component {
         }
         const delUser = () => {
             if (this.state.message === "") {
-                this.setState({ message: "Warning! There is no going back. Click button again to delete your profile."})
+                this.setState({ message: "Warning! No going back. Click again to delete your Account."})
             } else {
                 API.deleteUser( this.state.currentId )
                 .then(() => {                    
@@ -55,9 +55,9 @@ export default class userDelete extends React.Component {
                     <div>
                         <div style={{textAlign:"center"}}>
                             <NavbarComp />
-                            <h1 style={{paddingTop: "5rem"}}><span className="red-span">If you are sure you want to delete your profile, click the button below.</span></h1><br />
+                            <h1 style={{paddingTop: "5rem"}}><span className="red-span">If you are sure, click the button below.</span></h1><br />
                             <div><h1><span className="red-span">{this.state.message}</span></h1></div>
-                            <div style={{paddingBottom: "5rem"}}><button className="btn btn-danger submit-btn" onClick={delUser}><i class="fas fa-skull"></i> Delete Profile</button></div>
+                            <div style={{paddingBottom: "5rem"}}><button className="btn btn-danger submit-btn" onClick={delUser}><i class="fas fa-skull"></i> Delete Account</button></div>
                             <Footer />
                         </div>
                     </div>

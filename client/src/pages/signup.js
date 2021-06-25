@@ -50,7 +50,7 @@ class Signup extends Component {
             <div style={{textAlign:"center"}}>
                 <NavbarComp />
                     <div style={{paddingTop: "5rem", paddingBottom: "5rem"}}>
-                        <h1><span className="red-span">Create Your Profile Here</span></h1>
+                        <h1><span className="red-span">Create Your Account Here</span></h1>
                         <h3><span className="red-span">or </span><a className="blue-link" href="/">Login</a></h3>
                         <div>{this.state.message}</div>
                             <SignupForm 

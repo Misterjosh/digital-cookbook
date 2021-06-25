@@ -62,7 +62,7 @@ class Home extends Component {
                     <NavbarComp />
                     <div style={{paddingTop: "5rem", paddingBottom: "5rem"}} className="home">
                         <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
-                        <h3><span className="red-span">Please log in or </span><a className="blue-link" href="/signup">sign up</a></h3>
+                        <h3><span className="red-span">Please Log In or </span><a className="blue-link" href="/signup">Create an Account</a></h3>
                         <div>{this.state.message}</div>
                         <LogIn
                             email={this.state.email}
