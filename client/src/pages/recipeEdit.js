@@ -867,7 +867,7 @@ export default class recipeEdit extends Component {
                 return true;
             }
         }
-        if (localStorage.getItem('dcb-jwt') && checkExp === true) {
+        if (localStorage.getItem('dcb-jwt') && checkExp() === true) {
             return (
                 <div>
                     {this.state.loading || !this.state.recipe ? (
@@ -877,95 +877,96 @@ export default class recipeEdit extends Component {
                         <NavbarComp />
                         <div className="row" style={{paddingBottom: "1rem", textAlign:"center", paddingTop: "5rem"}}><h1><span className="red-span">Edit Your Recipe</span></h1><br /></div>
                         <div className="row">
-                            {/* <div className="col-1"></div> */}
                             <div className="col-lg-5 col-sm-12">
-                            <h1 style={{textAlign:"center"}}><span className="red-span">Current Recipe: </span></h1><br />
-                                    <RecipeCard 
-                                        recipe={this.state.recipe}
-                                    /><br />
+                                <h1 style={{textAlign:"center"}}><span className="red-span">Current Recipe: </span></h1><br />
+                                <RecipeCard recipe={this.state.recipe}/><br />
                             </div>
-                            <div className="col-lg-5 col-sm-12">    
-                            <h1 style={{textAlign: "center"}}><span className="red-span">What would you like to change?</span></h1>
-                            <div className="container" style={{marginTop: "2rem", backgroundColor: "white"}}>
+                            <form className="col-lg-5 col-sm-12">    
+                                <h1 style={{textAlign: "center"}}><span className="red-span">What would you like to change?</span></h1>
+                                <div className="container" style={{marginTop: "2rem", backgroundColor: "white"}}>
 
-                                <div>
-                                    <h3>Recipe Name: </h3>
-                                    <input type="text" name="newName" value={this.state.newName} onChange={this.handleInputChange} />
+                                    <div style={{marginTop: "0", paddingTop: "0.5rem", paddingBottom: "0.5rem"}}>
+                                        <h3>Recipe Name: </h3>
+                                        <input type="text" name="newName" value={this.state.newName} onChange={this.handleInputChange} />
+                                    </div>
+
+                                    <div style={{marginTop: "0", paddingTop: "0.5rem", paddingBottom: "0.5rem"}}>
+                                        <h3>Source: </h3>
+                                        <input type="text" name="newSource" value={this.state.newSource} onChange={this.handleInputChange} />
+                                    </div>
+
+                                    <div style={{marginTop: "0", paddingTop: "0.5rem", paddingBottom: "0.5rem"}}>
+                                        <h3>Number of Servings: </h3>
+                                        <input type="text" name="newServings" value={this.state.newServings} onChange={this.handleInputChange} />
+                                        <div className="row" style={{padding: "1rem"}}>
+                                            <div className="col">
+                                                <h5>Shows up as: This makes <span style={{backgroundColor: "lightblue"}}>{this.state.newServings}</span> servings.</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style={{marginTop: "0", paddingTop: "0.5rem", paddingBottom: "0.5rem"}}>
+                                        <h3>Ingredients: </h3>
+                                        <ul>
+                                            {(this.state.ingList).map((item, index) => (
+                                                <li key={item.id}>{item.value} 
+                                                    <button className="btn btn-danger btn-sm" onClick={() => this.onDeleteIng(index)}>x</button>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <input 
+                                        type="text"
+                                        name="ingVal"
+                                        value={this.state.ingVal}
+                                        onChange={this.handleInputChange}
+                                        />
+
+                                        <button
+                                        type="button"
+                                        onClick={this.onAddIng}
+                                        disabled={!this.state.ingVal}
+                                        className="btn submit-btn btn-success"
+                                        >
+                                        Add
+                                        </button>
+                                    </div>
+
+                                    <div style={{marginTop: "0", paddingTop: "0.5rem", paddingBottom: "0.5rem"}}>
+                                        <h3>Instructions: </h3>
+                                        <ul>
+                                            {(this.state.instList).map((item, index) => (
+                                                <li key={item.id}>{item.value} 
+                                                    <button className="btn btn-danger btn-sm" onClick={() => this.onDeleteInst(index)}>x</button>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <input 
+                                        type="text"
+                                        name="instVal"
+                                        value={this.state.instVal}
+                                        onChange={this.handleInputChange}
+                                        />
+
+                                        <button
+                                        type="button"
+                                        onClick={this.onAddInst}
+                                        disabled={!this.state.instVal}
+                                        className="btn submit-btn btn-success"
+                                        >
+                                        Add
+                                        </button>
+                                    </div>
+
+                                    <div style={{marginTop: "0", paddingTop: "0.5rem", paddingBottom: "0.5rem"}}>
+                                        <h1><span className="red-span">{this.state.message}</span></h1>
+                                    </div>
+
+                                    <button style={{paddingBottom: "0.5rem"}} onClick={this.onSubmit} className="btn submit-btn btn-primary"><i class="fas fa-plus"></i> Submit Changes</button>
+
                                 </div>
-
-                                <div>
-                                    <h3>Source: </h3>
-                                    <input type="text" name="newSource" value={this.state.newSource} onChange={this.handleInputChange} />
-                                </div>
-
-                                <div>
-                                    <h3>Number of Servings: </h3>
-                                    <input type="text" name="newServings" value={this.state.newServings} onChange={this.handleInputChange} /> 
-                                    <span>Shows up as: </span>
-                                    <span style={{backgroundColor: "yellow"}}>This makes {this.state.newServings} servings.</span>
-                                </div>
-
-                                <div>
-                                    <h3>Ingredients: </h3>
-                                    <ul>
-                                        {(this.state.ingList).map((item, index) => (
-                                            <li key={item.id}>{item.value} 
-                                                <button className="btn btn-danger btn-sm" onClick={() => this.onDeleteIng(index)}>x</button>
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    <input 
-                                    type="text"
-                                    name="ingVal"
-                                    value={this.state.ingVal}
-                                    onChange={this.handleInputChange}
-                                    />
-
-                                    <button
-                                    type="button"
-                                    onClick={this.onAddIng}
-                                    disabled={!this.state.ingVal}
-                                    >
-                                    Add
-                                    </button>
-                                </div>
-
-                                <div>
-                                    <h3>Instructions: </h3>
-                                    <ul>
-                                        {(this.state.instList).map((item, index) => (
-                                            <li key={item.id}>{item.value} 
-                                                <button className="btn btn-danger btn-sm" onClick={() => this.onDeleteInst(index)}>x</button>
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    <input 
-                                    type="text"
-                                    name="instVal"
-                                    value={this.state.instVal}
-                                    onChange={this.handleInputChange}
-                                    />
-
-                                    <button
-                                    type="button"
-                                    onClick={this.onAddInst}
-                                    disabled={!this.state.instVal}
-                                    >
-                                    Add
-                                    </button>
-                                </div>
-
-                                <div>
-                                    {this.state.message}
-                                </div>
-
-                                <button onClick={this.onSubmit}>Submit Changes</button>
-
-                                </div>
-                                    
-                            </div>
+                            </form>
                             <div className="col-1"></div>
                         </div>
                         <div style={{paddingBottom: "5rem"}}><h2 style={{textAlign:"center"}}><span className="red-span">{this.state.message}</span></h2></div>
