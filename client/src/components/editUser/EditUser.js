@@ -3,7 +3,7 @@ import './editUser.css';
 
 export default function EditUser({ fName, lName, email, password, onSubmit, handleInputChange }) {
     return (
-        <div>
+        <div style={{paddingTop: "5%"}}>
             <form>
                     <input
                         value={fName}
