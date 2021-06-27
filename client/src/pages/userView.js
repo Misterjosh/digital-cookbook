@@ -58,10 +58,10 @@ export default class userView extends React.Component {
                     <div> loading ...</div>
                     ) : (
                         <div>
-                            <div style={{textAlign:"center"}}>
+                            <div>
                                 <NavbarComp />
-                                <h1 style={{paddingTop: "5rem"}}><span className="red-span">Account Details for {this.state.person.fName} {this.state.person.lName}</span></h1><br />
-                                <div style={{paddingBottom: "5rem"}}>
+                                <h1 style={{paddingTop: "5rem", textAlign: "center"}}><span className="red-span">Account Details for {this.state.person.fName} {this.state.person.lName}</span></h1><br />
+                                <div style={{paddingBottom: "5rem", textAlign: "center"}}>
                                     <UserView 
                                         first={this.state.person.fName} 
                                         last={this.state.person.lName} 

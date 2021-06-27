@@ -477,28 +477,35 @@ class userEdit extends Component {
                     <div> loading ...</div>
                     ) : (
                     <div>
-                        <div style={{textAlign:"center"}}>
+                        <div>
                             <NavbarComp />
-                                <div style={{paddingTop: "5rem", paddingBottom: "5rem"}}>
-                                    <h1><span className="red-span">Your Account Details</span></h1><br />
-                                        <UserView 
-                                            first={this.state.person.fName} 
-                                            last={this.state.person.lName} 
-                                            email={this.state.person.email} 
-                                            created={this.state.person.created} 
-                                            updated={this.state.person.updated}
-                                            admin={(`${this.state.person.admin}`.toUpperCase())} 
-                                        /><br />
-                                    <h1><span className="red-span">What would you like to change?</span></h1>
-                                        <EditUser 
-                                                fName={this.state.fName}
-                                                lName={this.state.lName}
-                                                email={this.state.email}
-                                                password={this.state.password}
-                                                handleInputChange={this.handleInputChange}
-                                                onSubmit={this.onSubmit}
-                                        /><br />
-                                        <div><h2><span className="red-span">{this.state.message}</span></h2></div>
+                                <div className="container" style={{paddingTop: "5rem", paddingBottom: "5rem"}}>
+                                    <h1 className="red-span" style={{textAlign: "center", paddingBottom: "2rem"}}><span>Manage Your Account Details</span></h1>
+                                    <div className="row">
+                                        <div className="col col-lg-6 col-sm-12" style={{textAlign:"center"}}>
+                                        <h2><span className="red-span">Your Account Details</span></h2><br />
+                                            <UserView 
+                                                first={this.state.person.fName} 
+                                                last={this.state.person.lName} 
+                                                email={this.state.person.email} 
+                                                created={this.state.person.created} 
+                                                updated={this.state.person.updated}
+                                                admin={(`${this.state.person.admin}`.toUpperCase())} 
+                                            />
+                                        </div>
+                                        <div className="col col-lg-6 col-sm-12" style={{textAlign:"center"}}>
+                                        <h2><span className="red-span">What would you like to change?</span></h2>
+                                            <EditUser 
+                                                    fName={this.state.fName}
+                                                    lName={this.state.lName}
+                                                    email={this.state.email}
+                                                    password={this.state.password}
+                                                    handleInputChange={this.handleInputChange}
+                                                    onSubmit={this.onSubmit}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div><h2><span className="red-span">{this.state.message}</span></h2></div>
                                 </div>    
                             <Footer />
                         </div>
