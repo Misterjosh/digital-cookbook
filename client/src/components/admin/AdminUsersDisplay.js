@@ -6,7 +6,7 @@ export default class adminUsersDisplay extends Component {
         return (
             <div className="container" style={{paddingTop: "1%", paddingBottom: "1%", margin: "0 auto", justifyContent: "center", overflow: "hidden", marginBottom: "10%"}}>
                 {usersArray.map((user, click) => (
-                    <div className="child" key={user._id} class="card" style={{marginTop: "1rem", zIndex: "-5", display: "inline-block", marginRight: "1rem"}}>
+                    <div className="child" key={user._id} class="card" style={{marginTop: "1rem", display: "inline-block", marginRight: "1rem"}}>
                         <div class="card-body">
                             <h5 class="card-title">Name: {user.name.first} {user.name.last}</h5>
                             <h6 class="card-subtitle mb-2">Email: {user.email}</h6>
