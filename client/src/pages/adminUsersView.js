@@ -41,10 +41,10 @@ export default class adminUsersView extends Component {
             window.location.replace("/admin/users");
             })
             .catch(error => console.log(error));
-    }
+        }
         if (localStorage.getItem('dcb-jwt') && checkExp() === true) {
             return (
-                <div style={{}}>
+                <div>
                     <NavbarComp />
                     <h1 style={{paddingTop: "5rem", textAlign: "center"}}><span className="red-span">Admin Users Page</span></h1>
                     <AdminUsersDisplay arrUsers={this.state.users} delClick={onDeleteClick} />
