@@ -7,14 +7,18 @@ import AdminRecipesDisplay from '../components/admin/AdminRecipesDisplay';
 
 export default class adminRecipesView extends Component {
     state = {
-        recipes: []
+        recipes: [],
+        validAdmin: true
     };
 
     async componentDidMount() {
-        await API.getAllRecipes()
-            .then((allRecipes) => {
-                this.setState({ recipes: allRecipes.data });
-                console.log(this.state.recipes);
+        const token = window.localStorage.getItem('dcb-jwt');
+        const noBearer = token.replace(/Bearer token: /, '');
+        const decoded = jwt_decode(noBearer);
+        const userId = `${decoded.id}`;
+        await Promise.all([API.getAllRecipes(), API.getUserInfo({ params: { id: userId } })])
+            .then(([allRecipes, userInfo]) => {
+                this.setState({ recipes: allRecipes.data, validAdmin: userInfo.data.admin });
             })
             .catch((error) => console.log(error));
     }
@@ -44,7 +48,7 @@ export default class adminRecipesView extends Component {
             .catch(error => console.log(error));
             console.log("Delete Button Clicked");
         }
-        if (localStorage.getItem('dcb-jwt') && checkExp() === true) {
+        if (localStorage.getItem('dcb-jwt') && checkExp() === true && this.state.validAdmin === true) {
             return (
                 <div>
                     <NavbarComp />
