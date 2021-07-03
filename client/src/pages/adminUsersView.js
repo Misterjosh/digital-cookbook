@@ -7,14 +7,18 @@ import AdminUsersDisplay from '../components/admin/AdminUsersDisplay';
 
 export default class adminUsersView extends Component {
     state = {
-        users: []
+        users: [],
+        validAdmin: true
     };
 
     async componentDidMount() {
-        await API.getAllUsers()
-            .then((allUsers) => {
-                this.setState({ users: allUsers.data });
-                // console.log(this.state.users);
+        const token = window.localStorage.getItem('dcb-jwt');
+        const noBearer = token.replace(/Bearer token: /, '');
+        const decoded = jwt_decode(noBearer);
+        const userId = `${decoded.id}`;
+        await Promise.all([API.getAllUsers(), API.getUserInfo({ params: { id: userId } })])
+            .then(([allUsers, userInfo]) => {
+                this.setState({ users: allUsers.data, validAdmin: userInfo.data.admin });
             })
             .catch((error) => console.log(error));
     }
@@ -42,7 +46,7 @@ export default class adminUsersView extends Component {
             })
             .catch(error => console.log(error));
         }
-        if (localStorage.getItem('dcb-jwt') && checkExp() === true) {
+        if (localStorage.getItem('dcb-jwt') && checkExp() === true && this.state.validAdmin === true) {
             return (
                 <div>
                     <NavbarComp />
