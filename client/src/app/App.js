@@ -12,7 +12,8 @@ import RecipeEdit from '../pages/recipeEdit';
 import UserView from '../pages/userView';
 import UserEdit from '../pages/userEdit';
 import UserDelete from '../pages/userDelete';
-import AdminPage from '../pages/adminPage';
+import AdminRecipeEdit from '../pages/adminRecipeEdit';
+import AdminUserEdit from '../pages/adminUserEdit'
 import AdminRecipesView from '../pages/adminRecipesView';
 import AdminUsersView from '../pages/adminUsersView';
 
@@ -22,18 +23,19 @@ function App() {
       <div className="App">
         <Route exact path="/" component={Home} />
         <Route exact path="/signup" component={Signup} />
+        <Route exact path="/user/view" component={UserView} />
+        <Route exact path="/user/edit" component={UserEdit} />
+        <Route exact path="/user/delete" component={UserDelete} />
         <Route exact path="/recipe" component={Recipe} />
         <Route exact path="/recipe/create" component={RecipeCreate} />
         <Route exact path="/recipe/view" component={RecipeView} />
         <Route exact path="/recipes/view/user" component={RecipeViewAll} />
         <Route exact path="/recipes/view" component={RecipesView} />
         <Route exact path="/recipe/edit" component={RecipeEdit} />
-        <Route exact path="/user/view" component={UserView} />
-        <Route exact path="/user/edit" component={UserEdit} />
-        <Route exact path="/user/delete" component={UserDelete} />
-        <Route exact path="/admin" component={AdminPage} />
-        <Route exact path="/admin/recipes" component={AdminRecipesView} />
         <Route exact path="/admin/users" component={AdminUsersView} />
+        <Route exact path="/admin/edit/user" component={AdminUserEdit} />
+        <Route exact path="/admin/recipes" component={AdminRecipesView} />
+        <Route exact path="/admin/edit/recipe" component={AdminRecipeEdit} />
       </div>
     </Router>
   );
