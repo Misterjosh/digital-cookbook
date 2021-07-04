@@ -13,7 +13,7 @@ export default class adminUsersDisplay extends Component {
                             <h6 class="card-subtitle mb-2">Created: {user.created}</h6>
                             <h6 class="card-subtitle mb-2">Updated: {user.updated}</h6>
                             <h6 class="card-subtitle mb-2">Admin: {(`${user.admin}`).toUpperCase()}</h6>
-                            <button className="btn submit-btn btn-warning"><i class="fas fa-edit"></i> Edit</button>
+                            <button className="btn submit-btn btn-warning" onClick={() => this.props.editClick(user._id)}><i class="fas fa-edit"></i> Edit</button>
                             <button className="btn submit-btn btn-danger" onClick={() => this.props.delClick(user._id)}><i class="fas fa-trash-alt"></i> Delete</button>
                         </div>
                     </div>

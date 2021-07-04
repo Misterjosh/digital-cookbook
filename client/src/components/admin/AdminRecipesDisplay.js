@@ -10,7 +10,7 @@ export default class AdminRecipesDisplay extends Component {
                         <div class="card-body">
                             <h5 class="card-title">Recipe Name: {recipe.name}</h5>
                             <h6 class="card-subtitle mb-2">Author: {recipe.author}</h6>
-                            <button className="btn submit-btn btn-warning"><i class="fas fa-edit"></i> Edit</button>
+                            <button className="btn submit-btn btn-warning" onClick={() => this.props.editClick(recipe._id)}><i class="fas fa-edit"></i> Edit</button>
                             <button className="btn submit-btn btn-danger" onClick={() => this.props.delClick(recipe._id)}><i class="fas fa-trash-alt"></i> Delete</button>
                         </div>
                     </div>
