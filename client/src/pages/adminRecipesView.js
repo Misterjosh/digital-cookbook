@@ -48,12 +48,16 @@ export default class adminRecipesView extends Component {
             .catch(error => console.log(error));
             console.log("Delete Button Clicked");
         }
+        const onEditClick = (idToEdit) => {
+            window.localStorage.setItem('admin-id-recipe', idToEdit);
+            window.location.replace('/admin/edit/recipe');
+        }
         if (localStorage.getItem('dcb-jwt') && checkExp() === true && this.state.validAdmin === true) {
             return (
                 <div>
                     <NavbarComp />
                     <h1 style={{paddingTop: "5rem", textAlign: "center"}}><span className="red-span">Admin Recipes Page</span></h1>
-                    <AdminRecipesDisplay recArr={this.state.recipes} delClick={onDeleteClick} />
+                    <AdminRecipesDisplay recArr={this.state.recipes} delClick={onDeleteClick} editClick={onEditClick}/>
                     <Footer />
                 </div>
             )

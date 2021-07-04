@@ -46,12 +46,16 @@ export default class adminUsersView extends Component {
             })
             .catch(error => console.log(error));
         }
+        const onEditClick = (idToEdit) => {
+            window.localStorage.setItem('admin-id-user', idToEdit);
+            window.location.replace('/admin/edit/user');
+        }
         if (localStorage.getItem('dcb-jwt') && checkExp() === true && this.state.validAdmin === true) {
             return (
                 <div>
                     <NavbarComp />
                     <h1 style={{paddingTop: "5rem", textAlign: "center"}}><span className="red-span">Admin Users Page</span></h1>
-                    <AdminUsersDisplay arrUsers={this.state.users} delClick={onDeleteClick} />
+                    <AdminUsersDisplay arrUsers={this.state.users} delClick={onDeleteClick} editClick={onEditClick}/>
                     <Footer />
                 </div>
             )
