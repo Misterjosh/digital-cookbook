@@ -4,12 +4,18 @@ import Footer from '../components/footer/Footer';
 import jwt_decode from 'jwt-decode';
 import API from '../utils/api';
 import UserInfoCard from '../components/admin/edit/UserInfoCard';
+import UserEditForm from '../components/admin/edit/UserEditForm';
 
 export default class adminPage extends Component {
     state = {
         validAdmin: true,
         loading: true,
-        user: null
+        user: null,
+        fName: "",
+        lName: "",
+        email: "",
+        admin: "",
+        password: ""
     };
 
     async componentDidMount() {
@@ -35,6 +41,38 @@ export default class adminPage extends Component {
             .catch((error) => console.log(error));
     }
 
+    // This deals with each change from a value on the form
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        });
+    };
+
+    // function to set admin to true
+    adminTrue = () => {
+        this.setState({ admin: true });
+    }
+
+    // function to set admin to false
+    adminFalse = () => {
+        this.setState({ admin: false });
+    }
+
+    // makes sure there is a 
+    onSubmit = event => {
+        event.preventDefault();
+        const updatedUser = {
+            firstName: this.state.fName,
+            lastName: this.state.lName,
+            email: this.state.email,
+            password: this.state.password,
+            adminStatus: this.state.admin
+        }
+        console.log("submit button pressed");
+        console.log(updatedUser);
+    }
+
     render() {
         const goHome = () => {
             window.location.replace("/")
@@ -51,7 +89,7 @@ export default class adminPage extends Component {
                 return true;
             }
         }
-        if (localStorage.getItem('dcb-jwt') && checkExp() === true) {
+        if (localStorage.getItem('dcb-jwt') && checkExp() === true && this.state.validAdmin === true) {
             return (
                 <div>
                     {this.state.loading || !this.state.user ? (
@@ -59,13 +97,32 @@ export default class adminPage extends Component {
                     ) : ( 
                     <div>
                         <NavbarComp />
-                        <h1 className="red-span" style={{paddingTop: "5rem", textAlign: "center"}}>Generic Admin page to edit a user.</h1>
-                        <UserInfoCard
-                            first={this.state.user.fName} 
-                            last={this.state.user.lName} 
-                            email={this.state.user.email}
-                            admin={(`${this.state.user.admin}`.toUpperCase())}
-                        />
+                        <div className="container" style={{paddingTop: "5rem", paddingBottom: "5rem"}}>
+                            <h1 className="red-span" style={{textAlign: "center", paddingBottom: "2rem"}}>What would you like to change?</h1>
+                            <div className="row">
+                                <div className="col col-lg-6 col-sm-12" style={{textAlign:"center"}}>
+                                    <UserInfoCard
+                                        first={this.state.user.fName} 
+                                        last={this.state.user.lName} 
+                                        email={this.state.user.email}
+                                        admin={(`${this.state.user.admin}`.toUpperCase())}
+                                    />
+                                </div>
+                                <div className="col col-lg-6 col-sm-12">
+                                    <UserEditForm 
+                                        fName={this.state.fName}
+                                        lName={this.state.lName}
+                                        email={this.state.email}
+                                        password={this.state.password}
+                                        onSubmit={this.onSubmit}
+                                        handleInputChange={this.handleInputChange}
+                                        adminFalse={this.adminFalse}
+                                        adminTrue={this.adminTrue}
+                                        adminVal={this.state.admin}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <Footer />
                     </div>
                     )}
