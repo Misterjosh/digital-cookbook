@@ -7,7 +7,7 @@ export default function UserInfoCard({first, last, email, admin}) {
                 <div className="card-body" style={{textAlign: "left"}}>
                     <h5 className="card-title"><span>Name: </span>{first} {last}</h5>
                     <h6 className="card-subtitle mb-2"><span>Email: </span>{email}</h6>
-                    <h6 className="card-subtitle mb-2"><span>Admin: </span>{admin}</h6>
+                    <h6 className="card-subtitle mb-2"><span>Admin: </span>{(`${admin}`).toUpperCase()}</h6>
                 </div>
             </div>
         </div>
