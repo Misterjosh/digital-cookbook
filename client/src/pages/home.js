@@ -24,6 +24,10 @@ class Home extends Component {
 
     onSubmit = event => {
         event.preventDefault();
+        // clear any extra items left from previous session
+        localStorage.removeItem('current-recipe');
+        localStorage.removeItem('admin-id-user');
+        localStorage.removeItem('admin--recipe');
         if (this.state.email === "" || this.state.password === "") {
             this.setState({ message: "Both inputs need a value!"});
             return;
@@ -49,10 +53,8 @@ class Home extends Component {
             const noBearer = token.replace(/Bearer token: /, '');
             const decoded = jwt_decode(noBearer);
             if (( Date.now() >= (decoded.exp * 1000) )) {
-                console.log("token expired");
                 return false;
             } else {
-                console.log("token valid");
                 return true;
             }
         }
