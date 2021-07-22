@@ -14,50 +14,41 @@ import {
 } from 'reactstrap';
 import './navbar.css';
 import jwt_decode from 'jwt-decode';
-import API from '../../utils/api';
 
 const checkExp = () => {
   const token = window.localStorage.getItem('dcb-jwt');
   const noBearer = token.replace(/Bearer token: /, '');
   const decoded = jwt_decode(noBearer);
   if (( Date.now() >= (decoded.exp * 1000) )) {
-      console.log("token expired");
       return false;
   } else {
-      console.log("token valid");
       return true;
   }
-}
+};
 
 const logOut = () => {
   localStorage.removeItem('dcb-jwt');
   localStorage.removeItem('current-recipe');
+  localStorage.removeItem('admin-id-user');
+  localStorage.removeItem('admin--recipe');
   window.location.replace("/");
-}
+};
+
+const validAdmin = () => {
+  localStorage.getItem('dcb-jwt');
+  const token = window.localStorage.getItem('dcb-jwt');
+  const noBearer = token.replace(/Bearer token: /, '');
+  const decoded = jwt_decode(noBearer);
+  const validated = decoded.tonyDanza;
+  return validated;
+};
 
 const NavbarComp = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const [isAdmin, setAdmin] = useState(false);
-
-  if (localStorage.getItem('dcb-jwt')) {
-      const token = window.localStorage.getItem('dcb-jwt');
-      const noBearer = token.replace(/Bearer token: /, '');
-      const decoded = jwt_decode(noBearer);
-      const userId = `${decoded.id}`;
-      API.getUserInfo({ params: { id: userId } })
-          .then((user) => {
-              let adminValid = {
-                  admin: user.data.admin
-              };
-              setAdmin(adminValid.admin)
-  })
-      .catch((error) => console.log(error));
-  }
-
-  if (localStorage.getItem('dcb-jwt') && checkExp() === true && isAdmin === true) {
+  if (localStorage.getItem('dcb-jwt') && checkExp() === true && validAdmin() === true) {
     return (
         <div style={{position: "fixed", width: "100%", textAlign: "center"}}>
           <Navbar className="navbar" light expand="md">
