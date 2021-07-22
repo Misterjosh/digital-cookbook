@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function UserEditForm({ fName, lName, email, password, onSubmit, handleInputChange, adminFalse, adminTrue, adminVal }) {
     return (
-        <div style={{paddingTop: "5%"}} style={{textAlign: "left"}}>
+        <div style={{paddingTop: "5%", textAlign: "left"}}>
             <form>
                 <input
                     value={fName}
