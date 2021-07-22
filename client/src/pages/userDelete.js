@@ -57,7 +57,7 @@ export default class userDelete extends React.Component {
                             <NavbarComp />
                             <h1 style={{paddingTop: "5rem"}}><span className="red-span">If you are sure, click the button below.</span></h1><br />
                             <div><h1><span className="red-span">{this.state.message}</span></h1></div>
-                            <div style={{paddingBottom: "5rem"}}><button className="btn btn-danger submit-btn" onClick={delUser}><i class="fas fa-skull"></i> Delete Account</button></div>
+                            <div style={{paddingBottom: "5rem"}}><button className="btn btn-danger submit-btn" onClick={delUser}><i className="fas fa-skull"></i> Delete Account</button></div>
                             <Footer />
                         </div>
                     </div>
