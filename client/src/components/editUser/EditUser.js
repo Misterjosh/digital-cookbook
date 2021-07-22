@@ -33,7 +33,7 @@ export default function EditUser({ fName, lName, email, password, onSubmit, hand
                         type="password" 
                         placeholder="Password" />
                         <br />
-                    <button type="submit" className="btn btn-warning submit-btn" onClick={onSubmit}><i class="fas fa-edit"></i> Update Information</button>
+                    <button type="submit" className="btn btn-warning submit-btn" onClick={onSubmit}><i className="fas fa-edit"></i> Update Information</button>
                 </form>
         </div>
     )
