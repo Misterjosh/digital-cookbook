@@ -8,17 +8,22 @@ import AdminUsersDisplay from '../components/admin/AdminUsersDisplay';
 export default class adminUsersView extends Component {
     state = {
         users: [],
-        validAdmin: true
+        validAdmin: true,
+        loading: true
     };
 
     async componentDidMount() {
         const token = window.localStorage.getItem('dcb-jwt');
         const noBearer = token.replace(/Bearer token: /, '');
         const decoded = jwt_decode(noBearer);
-        const userId = `${decoded.id}`;
-        await Promise.all([API.getAllUsers(), API.getUserInfo({ params: { id: userId } })])
-            .then(([allUsers, userInfo]) => {
-                this.setState({ users: allUsers.data, validAdmin: userInfo.data.admin });
+        const validated = decoded.tonyDanza;
+        await API.getAllUsers()
+            .then((allUsers) => {
+                this.setState({ 
+                    users: allUsers.data, 
+                    validAdmin: validated,
+                    loading: false
+                });
             })
             .catch((error) => console.log(error));
     }
@@ -32,10 +37,8 @@ export default class adminUsersView extends Component {
             const noBearer = token.replace(/Bearer token: /, '');
             const decoded = jwt_decode(noBearer);
             if (( Date.now() >= (decoded.exp * 1000) )) {
-                console.log("token expired");
                 return false;
             } else {
-                console.log("token valid");
                 return true;
             }
         }
@@ -53,10 +56,16 @@ export default class adminUsersView extends Component {
         if (localStorage.getItem('dcb-jwt') && checkExp() === true && this.state.validAdmin === true) {
             return (
                 <div>
-                    <NavbarComp />
-                    <h1 style={{paddingTop: "5rem", textAlign: "center"}}><span className="red-span">Admin Users Page</span></h1>
-                    <AdminUsersDisplay arrUsers={this.state.users} delClick={onDeleteClick} editClick={onEditClick}/>
-                    <Footer />
+                    {this.state.loading || !this.state.users ? (
+                    <div> loading ...</div>
+                    ) : (
+                    <div>
+                        <NavbarComp />
+                        <h1 style={{paddingTop: "5rem", textAlign: "center"}}><span className="red-span">Admin Users Page</span></h1>
+                        <AdminUsersDisplay arrUsers={this.state.users} delClick={onDeleteClick} editClick={onEditClick}/>
+                        <Footer />
+                    </div>
+                    )}
                 </div>
             )
         } else {
