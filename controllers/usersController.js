@@ -180,7 +180,8 @@ module.exports = {
                 if (!isMatch) res.status(400).json({"password" : "That password doesn't match!"})
                 else {
                     const payload = {
-                        id: user.id
+                        id: user.id,
+                        tonyDanza: user.admin
                     }
                     jwt.sign(
                         payload,
