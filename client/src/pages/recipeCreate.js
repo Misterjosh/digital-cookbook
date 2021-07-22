@@ -219,7 +219,7 @@ export default class recipeCreate extends Component {
                     <h1><span className="red-span">{this.state.message}</span></h1>
                   </div>
 
-                  <button style={{paddingBottom: "0.5rem"}} onClick={this.onSubmit} className="btn submit-btn btn-primary"><i class="fas fa-plus"></i> Submit Recipe</button>
+                  <button style={{paddingBottom: "0.5rem"}} onClick={this.onSubmit} className="btn submit-btn btn-primary"><i className="fas fa-plus"></i> Submit Recipe</button>
                 </form>
 
                 <Footer />
