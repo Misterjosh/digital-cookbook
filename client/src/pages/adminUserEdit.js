@@ -25,9 +25,9 @@ export default class adminPage extends Component {
         const token = window.localStorage.getItem('dcb-jwt');
         const noBearer = token.replace(/Bearer token: /, '');
         const decoded = jwt_decode(noBearer);
-        const userId = `${decoded.id}`;
-        await Promise.all([API.getUserInfo({ params: { id: idToEdit } }), API.getUserInfo({ params: { id: userId } })])
-            .then(([user, userInfo]) => {
+        const validated = decoded.tonyDanza;
+        await API.getUserInfo({ params: { id: idToEdit } })
+            .then((user) => {
                 let userData = {
                     fName: user.data.name.first,
                     lName: user.data.name.last,
@@ -37,7 +37,7 @@ export default class adminPage extends Component {
                 };
                 this.setState({ 
                     user: userData, 
-                    validAdmin: userInfo.data.admin, 
+                    validAdmin: validated, 
                     loading: false,
                     admin: user.data.admin,
                     currentEmail: user.data.email,
@@ -161,10 +161,8 @@ export default class adminPage extends Component {
             const noBearer = token.replace(/Bearer token: /, '');
             const decoded = jwt_decode(noBearer);
             if (( Date.now() >= (decoded.exp * 1000) )) {
-                console.log("token expired");
                 return false;
             } else {
-                console.log("token valid");
                 return true;
             }
         }
