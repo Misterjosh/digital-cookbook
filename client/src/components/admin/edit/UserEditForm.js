@@ -45,7 +45,7 @@ export default function UserEditForm({ fName, lName, email, password, onSubmit, 
                         </div>
                     </div>
                 </fieldset>
-                <button type="submit" className="btn btn-warning submit-btn" onClick={onSubmit}><i class="fas fa-edit"></i> Update Information</button>
+                <button type="submit" className="btn btn-warning submit-btn" onClick={onSubmit}><i className="fas fa-edit"></i> Update Information</button>
             </form>   
         </div>
     )
