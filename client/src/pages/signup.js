@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import NavbarComp from '../components/navbar/Navbar';
+import NavbarComp from '../components/navbar/Navbar.js';
 import SignupForm from '../components/signupForm/signupForm';
-import Footer from '../components/footer/Footer';
+import Footer from '../components/footer/Footer.js';
 import API from '../utils/api';
 
 class Signup extends Component {
