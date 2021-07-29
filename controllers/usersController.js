@@ -174,7 +174,7 @@ module.exports = {
     login: (req, res) => {
         db.User.findOne({ email: req.body.email })
         .then((user) => {
-            if (!user) res.status(404).json({"email" : "That email doesn't exist!"});
+            if (!user) res.status(404);
             bcrypt.compare(req.body.password, user.password)
             .then((isMatch) => {
                 if (!isMatch) res.status(400).json({"password" : "That password doesn't match!"})
@@ -200,5 +200,6 @@ module.exports = {
             })
             .catch((err) => res.json(err.message));
         })
+        .catch((err) => res.json(err.message));
     }
 };
