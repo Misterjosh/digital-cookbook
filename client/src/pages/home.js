@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NavbarComp from '../components/navbar/Navbar.js';
 import LogIn from '../components/loginForm/LoginForm';
-import Footer from '../components/footer/Footer';
+import Footer from '../components/footer/Footer.js';
 import API from '../utils/api';
 import jwt_decode from 'jwt-decode';
 
