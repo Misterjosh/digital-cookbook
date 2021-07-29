@@ -24,4 +24,3 @@ export default function LogInForm({ email, password, onSubmit, handleInputChange
         </div>
     )
 }
-
