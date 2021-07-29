@@ -56,403 +56,89 @@ class userEdit extends Component {
     // update is taken care of on server side
     onSubmit = event => {
         event.preventDefault();
-        // 0000 if all fields are empty, the user will get a message and nothing will happen
+        // if there is a message, clear it
+        this.setState({ message: "" });
+        // if no changes were made, do nothing and let the user know why
         if (this.state.fName === "" && this.state.lName === "" && this.state.email === "" && this.state.password === "") {
-            this.setState({ message: "At least one field should have a value" });
+            this.setState({ message: "With no changes made, no changes were submitted." });
             return;
-        }
-
-        // 0001 if only password has a value, other values set to original
-        if (this.state.fName === "" && this.state.lName === "" && this.state.email === "" && this.state.password !== "") {
-
-            const editData = {
+        // changes are made but password isn't changed
+        } else if (this.state.password === "") {
+            const updatedUser = {
                 name: {
-                    first: this.state.person.fName,
-                    last: this.state.person.lName
+                    first: "",
+                    last: ""
                 },
-                email: this.state.person.email,
-                password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-            // if the message was set, it needs cleared
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 0010 if only email has a value, other values set to original
-        if (this.state.fName === "" && this.state.lName === "" && this.state.email !== "" && this.state.password === "") {
-
-            const editData = {
-                name: {
-                    first: this.state.person.fName,
-                    last: this.state.person.lName
-                },
-                email: this.state.email,
+                email: "",
+                admin: this.state.person.admin,
                 password: this.state.person.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
+                current: this.state.person.email
+    
+            };
+            if (this.state.fName === "") {
+                updatedUser.name.first = this.state.person.fName;
+            } else {
+                updatedUser.name.first = this.state.fName
+            };
+            if (this.state.lName === "") {
+                updatedUser.name.last = this.state.person.lName;
+            } else {
+                updatedUser.name.last = this.state.lName;
+            };
+            if (this.state.email === "") {
+                updatedUser.email = this.state.person.email;
+            } else {
+                updatedUser.email = this.state.email;
+            };
 
-            this.setState({ message: "" });
+            API.updateUserNoPass(this.state.id, updatedUser)
+            .then((response) => {
+                this.setState({ message: response.data });
+                if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                    window.location.replace("/user/view")
+                }, 1800);};
+            })
+            .catch((err) => console.log(err))
 
-            API.updateUserNoPass(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 0011 if email and password have a new values, other values set to original
-        if (this.state.fName === "" && this.state.lName === "" && this.state.email !== "" && this.state.password !== "") {
-
-            const editData = {
+        } else {
+            // changes are made and password is changed
+            const updatedUser = {
                 name: {
-                    first: this.state.person.fName,
-                    last: this.state.person.lName
+                    first: "",
+                    last: ""
                 },
-                email: this.state.email,
+                email: "",
+                admin: this.state.person.admin,
                 password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
+                current: this.state.user.email
+    
+            };
+            if (this.state.fName === "") {
+                updatedUser.name.first = this.state.user.fName;
+            } else {
+                updatedUser.name.first = this.state.fName
+            };
+            if (this.state.lName === "") {
+                updatedUser.name.last = this.state.user.lName;
+            } else {
+                updatedUser.name.last = this.state.lName;
+            };
+            if (this.state.email === "") {
+                updatedUser.email = this.state.user.email;
+            } else {
+                updatedUser.email = this.state.email;
+            };
 
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 0100 if only last name has a value, other values set to original
-        if (this.state.fName === "" && this.state.lName !== "" && this.state.email === "" && this.state.password === "") {
-
-            const editData = {
-                name: {
-                    first: this.state.person.fName,
-                    last: this.state.lName
-                },
-                email: this.state.person.email,
-                password: this.state.person.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUserNoPass(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 0101 if last name and password have new values, other values set to original
-        if (this.state.fName === "" && this.state.lName !== "" && this.state.email === "" && this.state.password !== "") {
-
-            const editData = {
-                name: {
-                    first: this.state.person.fName,
-                    last: this.state.lName
-                },
-                email: this.state.person.email,
-                password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 0110 if last name and email have new values, other values set to original
-        if (this.state.fName === "" && this.state.lName !== "" && this.state.email !== "" && this.state.password === "") {
-
-            const editData = {
-                name: {
-                    first: this.state.person.fName,
-                    last: this.state.lName
-                },
-                email: this.state.email,
-                password: this.state.person.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUserNoPass(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 0111 if first name is blank it will be set to its default value
-        if (this.state.fName === "" && this.state.lName !== "" && this.state.email !== "" && this.state.password !== "") {
-
-            const editData = {
-                name: {
-                    first: this.state.person.fName,
-                    last: this.state.lName
-                },
-                email: this.state.email,
-                password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 1000 if only first name has a value, other values set to original
-        if (this.state.fName !== "" && this.state.lName === "" && this.state.email === "" && this.state.password === "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.person.lName
-                },
-                email: this.state.person.email,
-                password: this.state.person.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUserNoPass(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 1001 if last name and email are blank, the rest will be set to default values
-        if (this.state.fName !== "" && this.state.lName === "" && this.state.email === "" && this.state.password !== "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.person.lName
-                },
-                email: this.state.person.email,
-                password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 1010 if last name and password are blank, the rest will be set to default values
-        if (this.state.fName !== "" && this.state.lName === "" && this.state.email !== "" && this.state.password === "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.person.lName
-                },
-                email: this.state.email,
-                password: this.state.person.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUserNoPass(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 1011 if last name is blank, it will be set to its default value
-        if (this.state.fName !== "" && this.state.lName === "" && this.state.email !== "" && this.state.password !== "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.person.lName
-                },
-                email: this.state.email,
-                password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 1100 if email and password are blank, they will be set to their default values
-        if (this.state.fName !== "" && this.state.lName !== "" && this.state.email === "" && this.state.password === "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.lName
-                },
-                email: this.state.person.email,
-                password: this.state.person.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUserNoPass(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log(err))
-        }
-
-        // 1101 if email is blank, it will be set to its default value
-        if (this.state.fName !== "" && this.state.lName !== "" && this.state.email === "" && this.state.password !== "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.lName
-                },
-                email: this.state.person.email,
-                password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log("Catch" + err))
-        }
-
-        // 1110 if password is blank, it will be set to its default value
-        if (this.state.fName !== "" && this.state.lName !== "" && this.state.email !== "" && this.state.password === "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.lName
-                },
-                email: this.state.email,
-                password: this.state.person.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUserNoPass(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log("Catch" + err))
-        }
-
-        // 1111 no are blank, then we use all the new info
-        if (this.state.fName !== "" && this.state.lName !== "" && this.state.email !== "" && this.state.password !== "") {
-
-            const editData = {
-                name: {
-                    first: this.state.fName,
-                    last: this.state.lName
-                },
-                email: this.state.email,
-                password: this.state.password,
-                current: this.state.person.email,
-                admin: this.state.person.admin
-            }
-
-            this.setState({ message: "" });
-
-            API.updateUser(this.state.id, editData)
-                .then((response) => {
-                    this.setState({ message: response.data });
-                    if (this.state.message === "Profile Updated!") {setTimeout(() => {
-                        window.location.replace("/user/view")
-                    }, 1800);};
-                })
-                .catch((err) => console.log("Catch" + err))
-        }
-
-    };
+            API.updateUser(this.state.id, updatedUser)
+            .then((response) => {
+                this.setState({ message: response.data });
+                if (this.state.message === "Profile Updated!") {setTimeout(() => {
+                    window.location.replace("/user/view")
+                }, 1800);};
+            })
+            .catch((err) => console.log(err))
+        };
+    }
 
     render() {
         const goHome = () => {
