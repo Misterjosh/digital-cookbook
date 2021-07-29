@@ -22,7 +22,8 @@ export default class recipeEdit extends Component {
         instVal: '',
         newName: '',
         newSource: '',
-        newServings: ''
+        newServings: '',
+        recipeId: ''
     };
 
 // get recipe info on load and store it for use by recipe card
@@ -30,7 +31,7 @@ export default class recipeEdit extends Component {
         const recipeId = localStorage.getItem("current-recipe");
         await API.getRecipeInfo(recipeId)
             .then((oneRecipe) => {
-                this.setState({ recipe: oneRecipe.data, loading: false });
+                this.setState({ recipe: oneRecipe.data, loading: false, recipeId: recipeId });
                 console.log(this.state.recipe);
             })
             .catch((error) => console.log(error));
@@ -48,7 +49,6 @@ export default class recipeEdit extends Component {
     onAddIng = () => {
       this.setState(state => {
       const ingList = state.ingList.concat({value: state.ingVal});
-      console.log(ingList);
   
         return {
           ingList,
@@ -60,7 +60,6 @@ export default class recipeEdit extends Component {
     onDeleteIng = i => {
       this.setState(state => {
       const ingList = state.ingList.filter((item, j) => i !== j);
-      console.log("Item Deleted");
   
         return {
           ingList
@@ -72,7 +71,6 @@ export default class recipeEdit extends Component {
     onAddInst = () => {
       this.setState(state => {
       const instList = state.instList.concat({value: state.instVal});
-      console.log(instList);
   
         return {
           instList,
@@ -93,753 +91,51 @@ export default class recipeEdit extends Component {
     };
 
 // Submit and all 32 of the ways the recipe could be edited...
-    onSubmit = (event) => {
-        event.preventDefault();
+onSubmit = (event) => {
+    event.preventDefault();
+    console.log("Button was pressed");
+    // if there is a message, clear it
+    this.setState({ message: "" });
+    // if no changes were made, do nothing and let the user know why
+    if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
+        this.setState({ message: "With no changes made, no changes were submitted." });
+        return;
 
-        const recipeId = localStorage.getItem("current-recipe");
-
-        // 00000
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            
-                this.setState({ message: "No Update as no changes were made." });
-                return;
+    } else {
+        const updatedRecipe = {
+            name: '',
+            source: '',
+            servings: '',
+            ingredients: this.state.recipe.ingredients,
+            instructions: this.state.recipe.instructions,
+            author: this.state.recipe.author,
+            authorId: this.state.recipe.authorId
+        };
+        if (this.state.newName === '') {
+            updatedRecipe.name = this.state.recipe.name
+        } else {
+            updatedRecipe.name = this.state.newName
         }
-
-        // 00001
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.recipe.source,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
+        if (this.state.newSource === '') {
+            updatedRecipe.source = this.state.recipe.source
+        } else {
+            updatedRecipe.source = this.state.newSource
+        }
+        if (this.state.newServings === '') {
+            updatedRecipe.servings = this.state.recipe.servings
+        } else {
+            updatedRecipe.servings = this.state.newServings
+        }
+        if (this.state.ingList.length > 0 ) {
+            updatedRecipe.ingredients = this.state.ingList
+        }
+        if (this.state.instList.length > 0) {
+            updatedRecipe.instructions = this.state.instList
+        }
             
             this.setState({ message: ""});
     
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 00010
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.recipe.source,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 00011
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.recipe.source,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 00100
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 00101
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 00110
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 00111
-        if (this.state.newName === '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01000
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01001
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01010
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01011
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01100
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01101
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01110
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 01111
-        if (this.state.newName === '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.recipe.name,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10000
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10001
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10010
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10011
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10100
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10101
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10110
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 10111
-        if (this.state.newName !== '' && this.state.newSource === '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.recipe.source,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11000
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11001
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11010
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.ingredients,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11011
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings === '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.recipe.servings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11100
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11101
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length === 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.recipe.ingredients,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11110
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length === 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.recipe.instructions,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
-            .then((response) => {
-                this.setState({ message: response.data });
-                if (this.state.message === "Recipe Updated!") {setTimeout(() => {
-                    window.location.replace("/recipes/view/user")
-                }, 1800);};
-            })
-            .catch(error => console.log(error));
-        }
-
-        // 11111
-        if (this.state.newName !== '' && this.state.newSource !== '' && this.state.newServings !== '' && this.state.ingList.length > 0 && this.state.instList.length > 0) {
-            const newRecipe = {
-                name: this.state.newName,
-                source: this.state.newSource,
-                servings: this.state.newServings,
-                ingredients: this.state.ingList,
-                instructions: this.state.instList,
-                author: this.state.recipe.author,
-                authorId: this.state.recipe.authorId
-            }
-            
-            this.setState({ message: ""});
-    
-            API.updateRecipe(recipeId, newRecipe)
+            API.updateRecipe(this.state.recipeId, updatedRecipe)
             .then((response) => {
                 this.setState({ message: response.data });
                 if (this.state.message === "Recipe Updated!") {setTimeout(() => {
@@ -860,10 +156,8 @@ export default class recipeEdit extends Component {
             const noBearer = token.replace(/Bearer token: /, '');
             const decoded = jwt_decode(noBearer);
             if (( Date.now() >= (decoded.exp * 1000) )) {
-                console.log("token expired");
                 return false;
             } else {
-                console.log("token valid");
                 return true;
             }
         }
@@ -969,14 +263,12 @@ export default class recipeEdit extends Component {
                             </form>
                             <div className="col-1"></div>
                         </div>
-                        <div style={{paddingBottom: "5rem"}}><h2 style={{textAlign:"center"}}><span className="red-span">{this.state.message}</span></h2></div>
                         <Footer />
                     </div>
                     )}
                 </div>
             )
-        } 
-        else {
+        } else {
             goHome();
         }
     }
