@@ -44,7 +44,6 @@ class Home extends Component {
                 window.location.replace("/recipes/view")
             })
             .catch((err) => {
-                console.log(err.response.status);
                 if (err.response.status === 404) {
                     this.setState({
                         email: '',
