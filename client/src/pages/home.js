@@ -43,8 +43,21 @@ class Home extends Component {
                 localStorage.setItem('dcb-jwt', jwt.data.token)
                 window.location.replace("/recipes/view")
             })
-            .catch((err) => console.log(err))
-
+            .catch((err) => {
+                console.log(err.response.status);
+                if (err.response.status === 404) {
+                    this.setState({
+                        email: '',
+                        password: '',
+                        message: "That email address is not registered"
+                    })
+                } else {
+                    this.setState({
+                        password: '',
+                        message: "That password is incorrect"
+                    })
+                }
+            })
     };
 
     render() {
@@ -65,7 +78,7 @@ class Home extends Component {
                     <div style={{paddingTop: "5rem", paddingBottom: "5rem"}} className="home">
                         <h1><span className="red-span">Welcome to Digital Cookbook</span></h1>
                         <h3><span className="red-span">Please Log In or </span><a className="blue-link" href="/signup">Create an Account</a></h3>
-                        <div>{this.state.message}</div>
+                        <h2 className="red-span">{this.state.message}</h2>
                         <LogIn
                             email={this.state.email}
                             password={this.state.password}
