@@ -11,12 +11,9 @@ mongoose.connect(
       useCreateIndex: true,
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useFindAndModify: false
+      useFindAndModify: true
     }
   );
-
-// findOneAndUpdate triggers a warning without this
-mongoose.set('useFindAndModify', true);
 
 // Makes express work with JSON objects in requests
 app.use(express.urlencoded({ extended: true }));
