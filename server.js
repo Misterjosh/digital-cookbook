@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const path = require("path");
 require('dotenv').config();
 const app = express();
 const routes = require('./routes')
@@ -26,6 +27,19 @@ app.use(express.json());
 
 // Makes express use the routes folder
 app.use(routes);
+
+// give server access to the react application when env is production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, '/client/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Api running");
+  });
+}
 
 // Set up the app to run using PORT
 app.listen(PORT, () =>
