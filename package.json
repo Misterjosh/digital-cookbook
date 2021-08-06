@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/Misterjosh/digital-cookbook/issues"
   },
-  "homepage": "https://mrjosh-digital-cookbook.herokuapp.com/",
+  "homepage": "https://github.com/Misterjosh/digital-cookbook#readme",
   "devDependencies": {
     "nodemon": "^2.0.7"
   },
